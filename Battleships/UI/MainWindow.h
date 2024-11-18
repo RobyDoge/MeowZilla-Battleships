@@ -1,16 +1,21 @@
-#pragma once
+﻿#pragma once
 
-#include <QtWidgets/QMainWindow>
-#include "ui_MainWindow.h"
+#include <QMainWindow>
+#include <QPushButton>
+#include <QStackedWidget>
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void openSetupWindow();
+    void openGameWindow();
 private:
-    Ui::MainWindowClass ui;
+    QStackedWidget* stackedWidget;
+
+    void setupUi(); // Funcție pentru inițializarea UI-ului
 };
