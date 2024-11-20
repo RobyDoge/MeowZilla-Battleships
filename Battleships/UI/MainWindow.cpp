@@ -5,32 +5,20 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), stackedWidget(new QStackedWidget(this)) {
-    setupUi();
+
+    ui.setupUi(this);
+    resize(1000, 1000);
+    ui.stackedWidget->resize(1000, 1000);
+    connect(ui.singlePlayerButton, &QPushButton::clicked, this, &MainWindow::openSetupWindow);
 }
 
 MainWindow::~MainWindow() {}
 
-void MainWindow::setupUi() {
-    QWidget* centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-
-    QVBoxLayout* layout = new QVBoxLayout(centralWidget);
-
-    QPushButton* btnSetup = new QPushButton("Setup Game", this);
-    QPushButton* btnPlay = new QPushButton("Start Game", this);
-
-    layout->addWidget(btnSetup);
-    layout->addWidget(btnPlay);
-    layout->addWidget(stackedWidget);
-
-    connect(btnSetup, &QPushButton::clicked, this, &MainWindow::openSetupWindow);
-    connect(btnPlay, &QPushButton::clicked, this, &MainWindow::openGameWindow);
-}
 
 void MainWindow::openSetupWindow() {
     SetupWindow* setupWindow = new SetupWindow(this);
-    stackedWidget->addWidget(setupWindow);
-    stackedWidget->setCurrentWidget(setupWindow);
+    ui.stackedWidget->addWidget(setupWindow);
+    ui.stackedWidget->setCurrentWidget(setupWindow);
 }
 
 void MainWindow::openGameWindow() {

@@ -17,7 +17,7 @@ signals:
     void setupConfirmed();
 
 private:
-    QGridLayout* gridLayout;
-    void setupUi();
 	Ui::SetupWindowClass ui;
+    void setupUi();
+
 };

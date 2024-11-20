@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QStackedWidget>
+#include "ui_mainWindow.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -15,7 +16,7 @@ private slots:
     void openSetupWindow();
     void openGameWindow();
 private:
-    QStackedWidget* stackedWidget;
+     Ui::MainWindowClass ui;
+     QStackedWidget* stackedWidget;
 
-    void setupUi(); // Funcție pentru inițializarea UI-ului
 };
