@@ -16,6 +16,11 @@ void Board::InitializeBoard()
 			m_board[i][j] = ETileType::Empty;
 		}
 	}
+
+	for (int i = 0; i < TOTAL_CATS; i++)
+	{
+		m_cats[i].clear();
+	}
 }
 
 std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> Board::GetBoard() const
@@ -38,9 +43,45 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 	return m_board[position.x][position.y];
 }
 
+bool Board::ArePositionsValid(const std::vector<Position>& positions) const
+{
+	return false;
+}
+
+void Board::UpdateBoard(std::vector<Position> positions)
+{
+	for (auto& position : positions)
+	{
+		m_board[position.x][position.y] = ETileType::Taken;
+	}
+}
+
+void Board::UpdateCats(std::vector<Position> positions)
+{
+	// this updates one cat list, the first one that isnt empty
+	for (int i = 0; i < TOTAL_CATS; i++)
+	{
+		if (m_cats[i].empty())
+		{
+			//m_cats[i] = positions;
+			break;
+		}
+	}
+}
+
 bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
 {
 	std::vector<Position> catPositions = CalculateCatPositions(position, type, orientation);
+	if (ArePositionsValid(catPositions))
+	{
+		UpdateBoard(catPositions);
+		UpdateCats(catPositions);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool Board::CheckHit(const Position& position)
@@ -75,31 +116,30 @@ void Board::RemovePieceFromCatList(const Position& position)
 	}
 }
 
-std::vector<Position> Board::CalculateCatPositions( Position headPosition, ECatSize type,
+std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSize type,
 	ECatOrientation orientation)
 {
-	int typeLenght = static_cast<int>(type);
+	int typeLength = static_cast<int>(type);
 	std::vector<Position> positions;
 
-	if(orientation == ECatOrientation::Horizontal)
+	if (orientation == ECatOrientation::Horizontal)
 	{
-		while(typeLenght)
+		while (typeLength)
 		{
 			positions.push_back(headPosition);
 			headPosition.y++;
-			typeLenght--;
+			typeLength--;
 		}
 	}
 	else
 	{
-		while(typeLenght)
+		while (typeLength)
 		{
 			positions.push_back(headPosition);
 			headPosition.x++;
-			typeLenght--;
+			typeLength--;
 		}
 	}
 
 	return positions;
 }
-

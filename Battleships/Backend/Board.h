@@ -27,17 +27,21 @@ class Board
 {
 public:
 	Board();
-	void InitializeBoard();
 
 public:
+	void InitializeBoard();
+
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> GetBoard() const;
 	int GetRemainingCats() const;
 	std::array<std::list<Position>, TOTAL_CATS> GetCats() const;
 
 	ETileType GetTileTypeAtPosition(const Position& position) const;
 
+	void UpdateBoard(std::vector<Position> positions);
+	void UpdateCats(std::vector<Position> positions);
+	bool ArePositionsValid(const std::vector<Position>& positions) const;
+
 	bool TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation);
-	void UpdateCat(const Position position, ECatSize type, ECatOrientation orientation);
 
 	bool CheckHit(const Position& position);
 
@@ -48,7 +52,6 @@ private:
 	std::array<std::list<Position>, TOTAL_CATS> m_cats;
 
 private:
-
 	void RemovePieceFromCatList(const Position& position);
 	std::vector<Position> CalculateCatPositions(Position headPosition, ECatSize type, ECatOrientation orientation);
 };

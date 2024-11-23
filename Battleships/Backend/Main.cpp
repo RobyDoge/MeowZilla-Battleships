@@ -1,8 +1,9 @@
-#include "Board.h"
+#include "Player.h"
 
 int main()
 {
-	Board board;
+	Player* player = new Player();
+
 
 	return 0;
 }
