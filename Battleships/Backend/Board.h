@@ -5,14 +5,23 @@
 #include <vector>
 
 #include "ECatOrientation.h"
-#include "ECatType.h"
+#include "ECatSize.h"
 #include "ETileType.h"
 
-using Position = std::pair<int, int>;
 const int BOARD_SIZE = 10;
 const int TOTAL_CATS = 5;
 const int TOTAL_CAT_POSITIONS = 18;
 
+struct Position
+{
+	int x;
+	int y;
+
+	bool operator==(const Position& other) const
+	{
+		return x == other.x && y == other.y;
+	}
+};
 
 class Board
 {
@@ -43,4 +52,3 @@ private:
 	void RemovePieceFromCatList(const Position& position);
 	std::vector<Position> CalculateCatPositions(Position headPosition, ECatSize type, ECatOrientation orientation);
 };
-

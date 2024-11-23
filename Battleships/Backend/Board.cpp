@@ -35,7 +35,7 @@ std::array<std::list<Position>, TOTAL_CATS> Board::GetCats() const
 
 ETileType Board::GetTileTypeAtPosition(const Position& position) const
 {
-	return m_board[position.first][position.second];
+	return m_board[position.x][position.y];
 }
 
 bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
@@ -45,16 +45,16 @@ bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation 
 
 bool Board::CheckHit(const Position& position)
 {
-	if (m_board[position.first][position.second] == ETileType::Taken)
+	if (m_board[position.x][position.y] == ETileType::Taken)
 	{
-		m_board[position.first][position.second] = ETileType::Hit;
+		m_board[position.x][position.y] = ETileType::Hit;
 		m_remainingCats--;
 		RemovePieceFromCatList(position);
 		return true;
 	}
 	else
 	{
-		m_board[position.first][position.second] = ETileType::Miss;
+		m_board[position.x][position.y] = ETileType::Miss;
 		return false;
 	}
 }
@@ -86,7 +86,7 @@ std::vector<Position> Board::CalculateCatPositions( Position headPosition, ECatS
 		while(typeLenght)
 		{
 			positions.push_back(headPosition);
-			headPosition.second++;
+			headPosition.y++;
 			typeLenght--;
 		}
 	}
@@ -95,7 +95,7 @@ std::vector<Position> Board::CalculateCatPositions( Position headPosition, ECatS
 		while(typeLenght)
 		{
 			positions.push_back(headPosition);
-			headPosition.first++;
+			headPosition.x++;
 			typeLenght--;
 		}
 	}

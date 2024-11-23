@@ -37,7 +37,7 @@
     <ClInclude Include="ETileType.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="ECatType.h">
+    <ClInclude Include="ECatSize.h">
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="ECatOrientation.h">
