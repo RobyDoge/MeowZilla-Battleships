@@ -131,12 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BattleshipsGame.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BattleshipsGame.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Computer.h" />
     <ClInclude Include="ECatOrientation.h" />

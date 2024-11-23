@@ -13,6 +13,9 @@ public:
 	Position GenerateTarget();
 	void GenerateCats();
 
+public:
+	std::shared_ptr<Board> GetBoard() const;
+
 private:
 	Position GenerateRandomPosition() const;
 	Position GenerateTargetBasedOnPreviousAttacks();

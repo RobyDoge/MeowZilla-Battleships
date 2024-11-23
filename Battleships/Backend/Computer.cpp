@@ -29,6 +29,11 @@ void Computer::GenerateCats()
 	//TODO
 }
 
+std::shared_ptr<Board> Computer::GetBoard() const
+{
+	return m_board;
+}
+
 Position Computer::GenerateRandomPosition() const
 {
 	while (true)
