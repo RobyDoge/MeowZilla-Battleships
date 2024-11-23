@@ -29,6 +29,9 @@
     <ClCompile Include="Board.cpp">
       <Filter>GameLogic\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Computer.cpp">
+      <Filter>GameLogic\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EPlayer.h">
@@ -47,6 +50,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
+      <Filter>GameLogic\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Computer.h">
       <Filter>GameLogic\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

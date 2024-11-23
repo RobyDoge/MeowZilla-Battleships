@@ -132,10 +132,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Computer.h" />
     <ClInclude Include="ECatOrientation.h" />
     <ClInclude Include="ECatSize.h" />
     <ClInclude Include="EPlayer.h" />
