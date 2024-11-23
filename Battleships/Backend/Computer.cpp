@@ -26,7 +26,28 @@ Position Computer::GenerateTarget()
 
 void Computer::GenerateCats()
 {
-	//TODO
+	std::vector<ECatSize> catsToBeGenerated = { ECatSize::Small, ECatSize::Medium,ECatSize::Medium, ECatSize::Large ,ECatSize::Large };
+	for (auto cat : catsToBeGenerated)
+	{
+		ECatOrientation orientation = static_cast<ECatOrientation>(rand() % 2 + 1);
+		if (orientation == ECatOrientation::Horizontal)
+		{
+			Position possiblePosition = { rand() % 10, rand() % (10 - static_cast<int>(cat)) };
+			while (!m_board->TryPlaceCat(possiblePosition, cat, orientation))
+			{
+				possiblePosition = { rand() % 10, rand() % (10 - static_cast<int>(cat)) };
+			}
+		}
+		else
+		{
+			Position possiblePosition = { rand() % (10 - static_cast<int>(cat)), rand() % 10 };
+			while (!m_board->TryPlaceCat(possiblePosition, cat, orientation))
+			{
+				possiblePosition = { rand() % (10 - static_cast<int>(cat)), rand() % 10 };
+			}
+		}
+
+	}
 }
 
 Position Computer::GenerateRandomPosition() const
