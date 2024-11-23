@@ -126,7 +126,7 @@
     <QtMoc Include="GameWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="EnemyBoard.h" />
+    <ClInclude Include="EnemyBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

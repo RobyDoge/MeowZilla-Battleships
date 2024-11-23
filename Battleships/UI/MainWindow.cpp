@@ -1,29 +1,22 @@
 #include "MainWindow.h"
-#include "SetupWindow.h" 
+#include "SetupWindow.h"
+#include "GameWindow.h"
+MainWindow::MainWindow(QWidget *parent)
+	: QMainWindow(parent)
+{
+	ui.setupUi(this);
+	connect(ui.pushButton, &QPushButton::clicked, this, &MainWindow::OpenSetupWindow);
 
-#include <QVBoxLayout>
-
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), stackedWidget(new QStackedWidget(this)) {
-
-    ui.setupUi(this);
-    resize(1000, 1000);
-    ui.stackedWidget->resize(1000, 1000);
-    connect(ui.singlePlayerButton, &QPushButton::clicked, this, &MainWindow::openSetupWindow);
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow()
+{}
 
+void MainWindow::OpenSetupWindow()
+{
+	auto* setupWindow = new SetupWindow();
+	setupWindow->show();
+	this->destroy();
 
-void MainWindow::openSetupWindow() {
-    SetupWindow* setupWindow = new SetupWindow(this);
-    ui.stackedWidget->addWidget(setupWindow);
-    ui.stackedWidget->setCurrentWidget(setupWindow);
-}
-
-void MainWindow::openGameWindow() {
-   /* GameWindow* gameWindow = new GameWindow(this);
-    stackedWidget->addWidget(gameWindow);
-    stackedWidget->setCurrentWidget(gameWindow);*/
 }
 

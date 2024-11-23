@@ -103,7 +103,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="EnemyBoard.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SetupWindow.cpp" />
@@ -124,9 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GameWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="EnemyBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

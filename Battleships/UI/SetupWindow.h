@@ -1,23 +1,22 @@
-#pragma once
+#ifndef SETUPWINDOW_H
+#define SETUPWINDOW_H
 
 #include <QWidget>
-#include "ui_SetupWindow.h"
-
-#include <QGridLayout>
 #include <QPushButton>
+#include "board.h"
 
 class SetupWindow : public QWidget {
     Q_OBJECT
 
 public:
     explicit SetupWindow(QWidget* parent = nullptr);
-    ~SetupWindow();
 
-signals:
-    void setupConfirmed();
+private slots:
+    void confirmSetup();
 
 private:
-	Ui::SetupWindowClass ui;
-    void setupUi();
-
+    Board* board;
+    QPushButton* confirmButton;
 };
+
+#endif // SETUPWINDOW_H

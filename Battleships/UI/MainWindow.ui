@@ -6,59 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
-    <height>420</height>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QStackedWidget" name="stackedWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>800</width>
-      <height>600</height>
+      <x>140</x>
+      <y>60</y>
+      <width>291</width>
+      <height>201</height>
      </rect>
     </property>
-    <widget class="QWidget" name="page">
-     <widget class="QWidget" name="verticalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>20</y>
-        <width>211</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QPushButton" name="singlePlayerButton">
-         <property name="text">
-          <string>SinglePlayer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>MultiPlayer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="optionsButton">
-         <property name="text">
-          <string>Options</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="page_2"/>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -66,7 +39,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>556</width>
+     <width>600</width>
      <height>21</height>
     </rect>
    </property>
@@ -82,8 +55,6 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="MainWindow.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

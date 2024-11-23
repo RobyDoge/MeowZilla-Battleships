@@ -103,14 +103,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="EnemyBoard.cpp" />
-    <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SetupWindow.cpp" />
     <ClCompile Include="Ship.cpp" />
     <QtRcc Include="Resource.qrc" />
     <ClCompile Include="main.cpp" />
-    <QtUic Include="GameWindow.ui" />
     <QtUic Include="MainWindow.ui" />
     <QtUic Include="SetupWindow.ui" />
   </ItemGroup>
@@ -120,13 +117,7 @@
   <ItemGroup>
     <QtMoc Include="Board.h" />
     <QtMoc Include="MainWindow.h" />
-    <QtMoc Include="Ship.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="GameWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="EnemyBoard.h" />
+    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
