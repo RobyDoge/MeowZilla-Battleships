@@ -106,6 +106,7 @@
     <ClCompile Include="EnemyBoard.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="PlayerBoard.cpp" />
     <ClCompile Include="SetupWindow.cpp" />
     <ClCompile Include="Ship.cpp" />
     <QtRcc Include="Resource.qrc" />
@@ -127,6 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="EnemyBoard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="PlayerBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

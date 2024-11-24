@@ -1,5 +1,5 @@
 ﻿#include "GameWindow.h"
-#include "board.h"
+#include "PlayerBoard.h"
 #include <QVBoxLayout>
 #include <QSplitter>
 GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
@@ -13,14 +13,14 @@ GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
     QVBoxLayout* layout = new QVBoxLayout(this);
     //layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
 
-// Creează un splitter orizontal
+    // Creează un splitter orizontal
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
     
     enemyBoard = new EnemyBoard(this);
     splitter->addWidget(enemyBoard);
 
     // Creează board-ul (tabla ta)
-    Board* board = new Board(this);
+    PlayerBoard* board = new PlayerBoard(this);
     board->setFixedSize(720, 720);
     board->setShips(ships);
     splitter->addWidget(board);

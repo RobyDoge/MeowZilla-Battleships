@@ -3,29 +3,48 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+#include <QPainter>
 #include <vector>
-#include "ship.h"
-#include <QImage>
+
+struct Position {
+    int row;
+    int col;
+};
+
 class Board : public QGraphicsView {
     Q_OBJECT
 
-public:
-    explicit Board(QWidget* parent = nullptr);
-    bool addShip(Ship* ship, int x, int y, bool rotated);
-
-    void setShips(std::vector<Ship*> ships);
-    std::vector<Ship*> getShips() { return ships; }
 protected:
-    void drawBackground(QPainter* painter, const QRectF& rect) override;
-    void snapToGrid(Ship* ship);
-private:
     QGraphicsScene* scene;
-    int rows = 10;
-    int cols = 10;
-    QImage backGroundPixmap;
-    QImage cellPixmap;
-    std::vector<Ship*> ships;
-    bool isValidPlacement(Ship* ship, int x, int y, bool rotated);
+    QImage backGroundImage;   
+    QImage cellPixmap;        
+    QPixmap hitPixmap;
+	QPixmap missPixmap;
+    
+    int cellSize = 70;               
+    bool gridVisible;         
+    std::vector<std::vector<QGraphicsPixmapItem*>> cells; 
+
+public:
+    Board(QWidget* parent = nullptr);
+    virtual ~Board();
+
+    // Inițializează tabla
+    virtual void initializeBoard(std::array<std::list<Position>, 5> catPositions);
+
+    // Desenează fundalul
+    virtual void drawBackground(QPainter* painter, const QRectF& rect) override;
+
+    // Afișează un anumit asset într-o celulă
+    void updateCell(int row, int col, const QPixmap& pixmap);
+
+    // Setează vizibilitatea unui grid
+    void setGridVisibility(bool visible);
+
+    // Setează vizibilitatea unei celule individuale
+    void setCellVisible(int row, int col, bool visible);
 };
 
 #endif // BOARD_H

@@ -1,61 +1,53 @@
-﻿#include "board.h"
-#include <QPainter>
+﻿#include "Board.h"
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
 
-Board::Board(QWidget* parent) : QGraphicsView(parent) {
-    // Creează scena
+Board::Board(QWidget* parent)
+    : QGraphicsView(parent), cellSize(70), gridVisible(false) {
     scene = new QGraphicsScene(this);
     setScene(scene);
-    setFixedSize(1400, 750);
+    setFixedSize(720, 720);
     scene->setSceneRect(0, 0, 700, 700);
 
-    // Încarcă fundalul
-    backGroundPixmap.load(":/Assets/background.jpg");
-
-    // Încarcă asset-ul pentru celule
-    cellPixmap.load(":/Assets/hit3.jpg");  // Asumăm că ai un asset numit "cell.jpg" în folderul Assets
-
-    setRenderHint(QPainter::Antialiasing);
-
-    // Adaugă nave în scenă
-    Ship* ship1 = new Ship(5, Qt::blue);
-    Ship* ship2 = new Ship(5, Qt::blue);
-    Ship* ship3 = new Ship(3, Qt::green);
-    Ship* ship4 = new Ship(3, Qt::green);
-    Ship* ship5 = new Ship(2, Qt::red);
-
-    ships.emplace_back(ship1);
-	ships.emplace_back(ship2);
-	ships.emplace_back(ship3);
-	ships.emplace_back(ship4);
-	ships.emplace_back(ship5);
-
-    scene->addItem(ship1);
-    scene->addItem(ship2);
-    scene->addItem(ship3);
-	scene->addItem(ship4);
-	scene->addItem(ship5);
-
-    // Poziționează navele pe tablă
-    ship1->setPos(-350, 0);
-    ship2->setPos(-350,70);
-    ship3->setPos(-350,140);
-	ship4->setPos(-350,210);
-	ship5->setPos(-350,280);
-
-    connect(ship1, &Ship::shipDropped, this, &Board::snapToGrid);
-    connect(ship2, &Ship::shipDropped, this, &Board::snapToGrid);
-    connect(ship3, &Ship::shipDropped, this, &Board::snapToGrid);
-	connect(ship4, &Ship::shipDropped, this, &Board::snapToGrid);
-	connect(ship5, &Ship::shipDropped, this, &Board::snapToGrid);
+    // Se încarcă imaginea implicită pentru celule
+    cellPixmap.load(":/Assets/emptyCell.jpg");
+    missPixmap.load(":/Assets/miss.png");
+    hitPixmap.load(":/Assets/hit.png");
+    // Setăm fundalul (de exemplu, o imagine de fundal)
+    backGroundImage.load(":/Assets/background.jpg");
 }
 
-void Board::setShips(std::vector<Ship*> ships)
-{
-    for(int i = 0; i < ships.size(); i++)
-	{
-        this->ships[i]->setPos(ships[i]->pos());
+Board::~Board() {}
+
+void Board::initializeBoard(std::array<std::list<Position>, 5> catPositions) {
+    cells.resize(10, std::vector<QGraphicsPixmapItem*>(10, nullptr));
+
+
+    for (const auto& wholeCat : catPositions) {
+		for (const auto& position : wholeCat) {
+            QPixmap resizedPixmap = hitPixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
+            QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(resizedPixmap);
+            pixmapItem->setPos(position.col * cellSize, position.row * cellSize);
+            scene->addItem(pixmapItem);
+            pixmapItem->setVisible(false);
+            cells[position.row][position.col] = pixmapItem;
+		}
 	}
+
+
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            if (cells[i][j] == nullptr) {
+                QPixmap resizedPixmap = missPixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
+                QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(resizedPixmap);
+                pixmapItem->setPos(j * cellSize, i * cellSize);
+                scene->addItem(pixmapItem);
+                pixmapItem->setVisible(false);
+                cells[i][j] = pixmapItem;
+            }
+        }
+    }
 }
 
 void Board::drawBackground(QPainter* painter, const QRectF& rect) {
@@ -63,7 +55,7 @@ void Board::drawBackground(QPainter* painter, const QRectF& rect) {
     QRectF boardArea(0, 0, 700, 700);
 
     // Desenează fundalul doar pe zona de board (700x700)
-    painter->drawImage(boardArea, backGroundPixmap);
+    painter->drawImage(boardArea, backGroundImage);
 
     // Desenează celulele individuale
     int cellSize = 70; // Dimensiunea fiecărei celule
@@ -73,23 +65,29 @@ void Board::drawBackground(QPainter* painter, const QRectF& rect) {
             painter->drawImage(cellRect, cellPixmap);  // Desenează asset-ul celulei la fiecare poziție
         }
     }
+    std::array<std::list<Position>, 5> catPositions;
+    for (int i = 0; i < 5; i++) {
+        catPositions[i] = { { { 0, i }, { 1, i }, { 2, i }, { 3, i }, { 4, i } } };
+    }
+    initializeBoard(catPositions);
 }
 
-
-void Board::snapToGrid(Ship* ship) {
-
-
-    int x = static_cast<int>(ship->pos().x() / 70) * 70;
-    int y = static_cast<int>(ship->pos().y() / 70) * 70;
-
-    // Aici o sa trimit in backend o lista cu toate pozitiile navelor si noua pozitie a navei care o fost mutata pe tabla daca e false se pune la last pos d
-    // daca e true se pune la pozitia curenta 
-    if (x < 0 || x >= scene->width() || y < 0 || y >= scene->height()) 
-    {
-        ship->setPos(ship->getLastPos().x(), ship->getLastPos().y());
+void Board::updateCell(int row, int col, const QPixmap& pixmap) {
+    if (row >= 0 && row < 10 && col >= 0 && col < 10) {
+        QPixmap resizedPixmap = pixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
+        cells[row][col]->setPixmap(resizedPixmap);
     }
-    else 
-    {
-        ship->setPos(x, y);
+}
+
+// Setează vizibilitatea întregului grid
+void Board::setGridVisibility(bool visible) {
+    gridVisible = visible;
+    update();  // Reîmprospătează scena pentru a aplica modificările
+}
+
+// Setează vizibilitatea unei celule individuale
+void Board::setCellVisible(int row, int col, bool visible) {
+    if (row >= 0 && row < 10 && col >= 0 && col < 10) {
+        cells[row][col]->setVisible(visible);
     }
 }

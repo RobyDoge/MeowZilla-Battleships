@@ -9,5 +9,7 @@
         <file>Assets/small_sleepy.png</file>
         <file>Assets/big_sleepy.png</file>
         <file>Assets/medium_sleepy.png</file>
+        <file>Assets/hit.png</file>
+        <file>Assets/miss.png</file>
     </qresource>
 </RCC>

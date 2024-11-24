@@ -11,7 +11,7 @@ SetupWindow::SetupWindow(QWidget* parent) : QWidget(parent) {
     layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
 
     // Creează board-ul
-    board = new Board(this);
+    board = new PlayerBoard(this);
     layout->addWidget(board, 0, Qt::AlignCenter); // Adaugă tabla pe mijloc
 
     // Buton de confirmare

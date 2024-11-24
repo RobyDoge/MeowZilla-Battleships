@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-#include "board.h"
+#include "PlayerBoard.h"
 
 class SetupWindow : public QWidget {
     Q_OBJECT
@@ -15,7 +15,7 @@ private slots:
     void confirmSetup();
 
 private:
-    Board* board;
+    PlayerBoard* board;
     QPushButton* confirmButton;
 };
 

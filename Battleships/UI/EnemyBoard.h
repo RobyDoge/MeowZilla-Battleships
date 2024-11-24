@@ -5,8 +5,9 @@
 #include <QGraphicsScene>
 #include <QImage>
 #include <QMouseEvent>
+#include "Board.h"
 
-class EnemyBoard : public QGraphicsView {
+class EnemyBoard : public Board {
     Q_OBJECT
 
 public:
@@ -14,13 +15,12 @@ public:
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
-    void drawBackground(QPainter* painter, const QRectF& rect) override;
-
 private:
+    std::vector<std::vector<QGraphicsPixmapItem*>> cells;
     QGraphicsScene* scene;
     QImage backGroundPixmap;
-    QImage cellPixmap;     // Imaginea de bază a celulei
-    QImage hitPixmap;      // Imaginea pentru celulă lovită
+    QPixmap cellPixmap;     // Imaginea de bază a celulei
+    QPixmap hitPixmap;      // Imaginea pentru celulă lovită
     int cellSize = 70;          // Dimensiunea celulei
 };
 

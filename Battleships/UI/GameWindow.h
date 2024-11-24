@@ -4,6 +4,7 @@
 #include "ui_GameWindow.h"
 #include "board.h"
 #include "EnemyBoard.h"
+#include "Ship.h"
 
 class GameWindow : public QWidget
 {
