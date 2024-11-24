@@ -9,6 +9,9 @@ public:
 	BattleshipsGame();
 
 public:
+	EPlayer GetCurrentPlayer() const;
+
+public:
 	void RunGame();
 	void AttackAtPosition(Position position, std::shared_ptr<Board> board);
 	void ChangeTurn(EPlayer currentPlayer);

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "Board.h"
 
-
 class Computer
 {
 
@@ -19,7 +18,7 @@ public:
 private:
 	Position GenerateRandomPosition() const;
 	Position GenerateTargetBasedOnPreviousAttacks();
-	Position HitRandomNeighbor(const Position& position) const;
+	Position HitRandomNeighbour(const Position& position) const;
 	ECatOrientation FindCatOrientation() const;
 	std::vector<Position> ValidatePossibleHits(const std::vector<Position>& possibleHits) const;
 	static Position ChooseRandomPosition(const std::vector<Position>& possibleHits);

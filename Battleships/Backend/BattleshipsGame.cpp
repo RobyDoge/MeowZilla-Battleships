@@ -7,6 +7,11 @@ BattleshipsGame::BattleshipsGame()
 	m_currentPlayer = EPlayer::None;
 }
 
+EPlayer BattleshipsGame::GetCurrentPlayer() const
+{
+	return m_currentPlayer;
+}
+
 void BattleshipsGame::RunGame()
 {
 	// initial version for the run method
