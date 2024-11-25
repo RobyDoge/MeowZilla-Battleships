@@ -45,7 +45,18 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 
 bool Board::ArePositionsValid(const std::vector<Position>& positions) const
 {
-	return false;
+	for (auto& position : positions)
+	{
+		if (position.x < 0 || position.x >= BOARD_SIZE - 1 || position.y < 0 || position.y >= BOARD_SIZE - 1)
+		{
+			return false;
+		}
+
+		if (m_board[position.x][position.y] != ETileType::Empty)
+		{
+			return false;
+		}
+	}
 }
 
 void Board::UpdateBoard(std::vector<Position> positions)
@@ -58,13 +69,14 @@ void Board::UpdateBoard(std::vector<Position> positions)
 
 void Board::UpdateCats(std::vector<Position> positions)
 {
-	// this updates one cat list, the first one that isnt empty
 	for (int i = 0; i < TOTAL_CATS; i++)
 	{
 		if (m_cats[i].empty())
 		{
-			//m_cats[i] = positions;
-			break;
+			for(auto& position : positions)
+			{
+				m_cats[i].push_back(position);
+			}
 		}
 	}
 }

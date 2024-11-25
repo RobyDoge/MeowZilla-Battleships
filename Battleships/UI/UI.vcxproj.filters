@@ -21,20 +21,17 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Source Files\Boards">
+      <UniqueIdentifier>{9ca12606-7195-4c5e-9441-523424758b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Boards">
+      <UniqueIdentifier>{72f6bd37-55dc-4000-bcfe-f6aac03e78ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="MainWindow.qrc">
+    <QtRcc Include="Resource.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="MainWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtMoc Include="MainWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,29 +40,57 @@
     <ClCompile Include="SetupWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ship.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files\Boards</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBoard.cpp">
+      <Filter>Source Files\Boards</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBoard.cpp">
+      <Filter>Source Files\Boards</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SetupWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Ship.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GameWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Board.h">
+      <Filter>Header Files\Boards</Filter>
+    </QtMoc>
+    <QtMoc Include="EnemyBoard.h">
+      <Filter>Header Files\Boards</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerBoard.h">
+      <Filter>Header Files\Boards</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SetupWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <QtUic Include="MainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="GameWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

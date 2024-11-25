@@ -103,34 +103,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="EnemyBoard.cpp" />
-    <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="PlayerBoard.cpp" />
     <ClCompile Include="SetupWindow.cpp" />
     <ClCompile Include="Ship.cpp" />
-    <QtRcc Include="Resource.qrc" />
-    <ClCompile Include="main.cpp" />
-    <QtUic Include="GameWindow.ui" />
+    <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
+    <QtMoc Include="MainWindow.h" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="main.cpp" />
     <QtUic Include="SetupWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SetupWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Board.h" />
-    <QtMoc Include="MainWindow.h" />
-    <QtMoc Include="Ship.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="GameWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="EnemyBoard.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="PlayerBoard.h" />
+    <Image Include="C:\Users\silvi\Downloads\hit.jpg" />
+    <Image Include="C:\Users\silvi\Downloads\emptyCell.jpg" />
+    <Image Include="C:\Users\silvi\Downloads\miss.jpg" />
+    <Image Include="C:\Users\silvi\Downloads\background.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

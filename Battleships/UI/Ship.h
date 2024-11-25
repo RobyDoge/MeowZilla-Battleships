@@ -3,26 +3,35 @@
 
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
-#include <QBrush>
+#include <QPixmap>
+#include <QColor>
+#include <qbrush.h>
+#include <QObject>
+class Ship : public QObject, public QGraphicsRectItem { 
+    Q_OBJECT 
 
-class Ship : public QGraphicsRectItem {
 public:
     Ship(int size, QColor color, QGraphicsItem* parent = nullptr);
-
-    void rotate(); // Rotire orizontală/verticală
     int getSize() const;
     bool isHorizontal() const;
+    void rotate();
 
+    QPointF getLastPos();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) override;
 
+signals:
+    void shipDropped(Ship* ship);
+
 private:
     int size;
-    bool horizontal; // True pentru orizontal, False pentru vertical
-    QPointF initialPos; // Poziția inițială
+    bool horizontal;  // Orientarea navei
+    QPixmap shipPixmap;
+    QPixmap scaledPixmap;
+    QPointF lastPos;  // Poziția inițială pentru anularea mutării, dacă e necesar
 };
 
 #endif // SHIP_H

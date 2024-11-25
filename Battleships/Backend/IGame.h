@@ -5,7 +5,8 @@
 class IGame 
 {
 public:
-	virtual ETileType AttackAtPosition(Position position, std::shared_ptr<Board> board) = 0;
+	virtual void RunGame() = 0;
+	virtual void AttackAtPosition(Position position, std::shared_ptr<Board> board) = 0;
 	virtual void ChangeTurn(EPlayer currentPlayer) = 0;
 };
 

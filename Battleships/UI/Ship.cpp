@@ -1,9 +1,31 @@
 ﻿#include "Ship.h"
+#include <QPen>
 
 Ship::Ship(int size, QColor color, QGraphicsItem* parent)
     : QGraphicsRectItem(parent), size(size), horizontal(true) {
-    setRect(0, 0, size * 50, 50); // Dimensiune inițială (orizontală)
-    setBrush(QBrush(color));
+
+    switch (size) {
+    case 5: shipPixmap.load(":/Assets/big_sleepy.png"); break;
+    case 3: shipPixmap.load(":/Assets/medium_sleepy.png"); break;
+    case 2: shipPixmap.load(":/Assets/small_sleepy.png"); break;
+    }
+    if (horizontal) {
+        setRect(0, 0, size * 70, 70);
+        scaledPixmap = shipPixmap.scaled(70, size * 70, Qt::IgnoreAspectRatio);
+        QTransform transform;
+        transform.rotate(90);
+        scaledPixmap = scaledPixmap.transformed(transform);
+
+    }
+    else {
+        setRect(0, 0, 70, size * 70);
+        scaledPixmap = shipPixmap.scaled(size * 70, 70, Qt::IgnoreAspectRatio);
+        QTransform transform;
+        transform.rotate(-90);
+        scaledPixmap = scaledPixmap.transformed(transform);
+    }
+    setBrush(QBrush(scaledPixmap));
+    setPen(QPen(Qt::NoPen)); 
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
@@ -11,11 +33,26 @@ Ship::Ship(int size, QColor color, QGraphicsItem* parent)
 void Ship::rotate() {
     horizontal = !horizontal;
     if (horizontal) {
-        setRect(0, 0, size * 50, 50); // Orizontal
+        setRect(0, 0, size * 70, 70); // Orizontal
+        scaledPixmap = shipPixmap.scaled(70, size * 70, Qt::IgnoreAspectRatio);
+        QTransform transform;
+        transform.rotate(90);
+        scaledPixmap = scaledPixmap.transformed(transform);
+        setBrush(QBrush(scaledPixmap));
+
     }
     else {
-        setRect(0, 0, 50, size * 50); // Vertical
+        setRect(0, 0, 70, size * 70); // Vertical
+        scaledPixmap = shipPixmap.scaled(70,size * 70, Qt::IgnoreAspectRatio);
+        setBrush(QBrush(scaledPixmap));
+
+
     }
+}
+
+QPointF Ship::getLastPos()
+{
+    return lastPos;
 }
 
 int Ship::getSize() const {
@@ -27,7 +64,7 @@ bool Ship::isHorizontal() const {
 }
 
 void Ship::mousePressEvent(QGraphicsSceneMouseEvent* event) {
-    initialPos = pos(); // Salvează poziția inițială
+    lastPos = pos(); // Salvează poziția inițială
     QGraphicsRectItem::mousePressEvent(event);
 }
 
@@ -36,11 +73,7 @@ void Ship::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 }
 
 void Ship::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
-    // Ajustează la grilă (snap to grid)
-    int x = static_cast<int>(pos().x() / 50) * 50;
-    int y = static_cast<int>(pos().y() / 50) * 50;
-    setPos(x, y);
-
+    emit shipDropped(this);
     QGraphicsRectItem::mouseReleaseEvent(event);
 }
 

@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Assets/background.jpg</file>
+        <file>Assets/emptyCell.jpg</file>
+        <file>Assets/hit.jpg</file>
+        <file>Assets/miss.jpg</file>
+        <file>Assets/hit2.jpg</file>
+        <file>Assets/hit3.jpg</file>
+        <file>Assets/small_sleepy.png</file>
+        <file>Assets/big_sleepy.png</file>
+        <file>Assets/medium_sleepy.png</file>
+        <file>Assets/hit.png</file>
+        <file>Assets/miss.png</file>
+    </qresource>
+</RCC>

@@ -50,6 +50,11 @@ void Computer::GenerateCats()
 	}
 }
 
+std::shared_ptr<Board> Computer::GetBoard() const
+{
+	return m_board;
+}
+
 Position Computer::GenerateRandomPosition() const
 {
 	while (true)
@@ -66,7 +71,7 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 {
 	if (m_currentTargetKnownPositions.size() == 1)
 	{
-		return HitRandomNeighbor(m_currentTargetKnownPositions[0]);
+		return HitRandomNeighbour(m_currentTargetKnownPositions[0]);
 	}
 
 	auto catOrientation = FindCatOrientation();
@@ -119,7 +124,7 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 
 }
 
-Position Computer::HitRandomNeighbor(const Position& position) const
+Position Computer::HitRandomNeighbour(const Position& position) const
 {
 	std::vector<Position> neighbors;
 	neighbors.push_back({ position.x - 1, position.y });
