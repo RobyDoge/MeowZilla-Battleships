@@ -67,5 +67,11 @@
     <ClInclude Include="BattleshipsGame.h">
       <Filter>GameLogic\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IBoardObserver.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFactory.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

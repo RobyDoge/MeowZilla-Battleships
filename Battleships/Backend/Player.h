@@ -14,5 +14,7 @@ public:
 	bool PlaceCat(const Position position, ECatSize type, ECatOrientation orientation);
 
 private:
-	std::shared_ptr<Board> m_board;
+	BoardPtr m_board;
 };
+
+using PlayerPtr = std::shared_ptr<Player>;

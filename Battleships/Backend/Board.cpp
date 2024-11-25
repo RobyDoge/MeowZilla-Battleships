@@ -88,6 +88,7 @@ bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation 
 	{
 		UpdateBoard(catPositions);
 		UpdateCats(catPositions);
+		NotifyObservers();
 		return true;
 	}
 	else
@@ -103,13 +104,25 @@ bool Board::CheckHit(const Position& position)
 		m_board[position.x][position.y] = ETileType::Hit;
 		m_remainingCats--;
 		RemovePieceFromCatList(position);
+		NotifyObservers();
 		return true;
 	}
 	else
 	{
 		m_board[position.x][position.y] = ETileType::Miss;
+		NotifyObservers();
 		return false;
 	}
+}
+
+void Board::AddObserver(IBoardObserverPtr observer)
+{
+	m_observers.push_back(observer);
+}
+
+void Board::RemoveObserver(IBoardObserverPtr observer)
+{
+	m_observers.erase(std::remove(m_observers.begin(), m_observers.end(), observer), m_observers.end());
 }
 
 void Board::RemovePieceFromCatList(const Position& position)
@@ -154,4 +167,12 @@ std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSi
 	}
 
 	return positions;
+}
+
+void Board::NotifyObservers()
+{
+	for (auto& observer : m_observers)
+	{
+		observer->OnBoardUpdated();
+	}
 }

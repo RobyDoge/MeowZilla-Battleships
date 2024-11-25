@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Computer.h"
 
-class BattleshipsGame: public IGame
+class BattleshipsGame: public IGame, public IBoardObserver
 {
 public:
 	BattleshipsGame();
@@ -12,13 +12,18 @@ public:
 	EPlayer GetCurrentPlayer() const;
 
 public:
-	void RunGame();
-	void AttackAtPosition(Position position, std::shared_ptr<Board> board);
-	void ChangeTurn(EPlayer currentPlayer);
+	void InitializeObservers(IBoardObserverPtr playerObserver, IBoardObserverPtr computerObserver) override;
+
+	void RunGame() override;
+	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
+	void ChangeTurn(EPlayer currentPlayer) override;
+	void AddBoardObserver(EPlayer player, IBoardObserverPtr observer) override;
+
+public:
+	void OnBoardUpdated() override;
 
 private:
-	std::shared_ptr<Player> m_player;
-	std::shared_ptr<Computer> m_computer;
+	PlayerPtr m_player;
+	ComputerPtr m_computer;
 	EPlayer m_currentPlayer;
 };
-

@@ -145,6 +145,8 @@
     <ClInclude Include="ECatSize.h" />
     <ClInclude Include="EPlayer.h" />
     <ClInclude Include="ETileType.h" />
+    <ClInclude Include="GameFactory.h" />
+    <ClInclude Include="IBoardObserver.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

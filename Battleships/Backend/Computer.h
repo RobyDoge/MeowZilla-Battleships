@@ -24,10 +24,12 @@ private:
 	static Position ChooseRandomPosition(const std::vector<Position>& possibleHits);
 
 private:
-	std::shared_ptr<Board> m_board;
+	BoardPtr m_board;
 
 	std::vector<Position> m_positionsHit;
 	bool m_foundATarget;
 	std::vector<Position> m_currentTargetKnownPositions;
 	bool m_previousAttackSucceeded;
 };
+
+using ComputerPtr = std::shared_ptr<Computer>;

@@ -7,6 +7,7 @@
 #include "ECatOrientation.h"
 #include "ECatSize.h"
 #include "ETileType.h"
+#include "IBoardObserver.h"
 
 const int BOARD_SIZE = 10;
 const int TOTAL_CATS = 5;
@@ -27,16 +28,16 @@ class Board
 {
 public:
 	Board();
-
-public:
 	void InitializeBoard();
 
+public:
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> GetBoard() const;
 	int GetRemainingCats() const;
 	std::array<std::list<Position>, TOTAL_CATS> GetCats() const;
 
 	ETileType GetTileTypeAtPosition(const Position& position) const;
 
+public:
 	void UpdateBoard(std::vector<Position> positions);
 	void UpdateCats(std::vector<Position> positions);
 	bool ArePositionsValid(const std::vector<Position>& positions) const;
@@ -45,13 +46,21 @@ public:
 
 	bool CheckHit(const Position& position);
 
+public:
+	void AddObserver(IBoardObserverPtr observer);
+	void RemoveObserver(IBoardObserverPtr observer);
+	
 
 private:
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> m_board;
 	int m_remainingCats;
 	std::array<std::list<Position>, TOTAL_CATS> m_cats;
+	std::vector<IBoardObserverPtr> m_observers;
 
 private:
 	void RemovePieceFromCatList(const Position& position);
 	std::vector<Position> CalculateCatPositions(Position headPosition, ECatSize type, ECatOrientation orientation);
+	void NotifyObservers(); // to notify observers that the board has changed
 };
+
+using BoardPtr = std::shared_ptr<Board>;
