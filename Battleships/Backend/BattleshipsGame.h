@@ -3,27 +3,29 @@
 #include "Player.h"
 #include "Computer.h"
 
-class BattleshipsGame: public IGame, public IBoardObserver
+class BattleshipsGame: public IGame
 {
 public:
 	BattleshipsGame();
 
 public:
 	EPlayer GetCurrentPlayer() const;
+	PlayerPtr GetPlayer() const;
+	ComputerPtr GetComputer() const;
 
 public:
-	void InitializeObservers(IBoardObserverPtr playerObserver, IBoardObserverPtr computerObserver) override;
+	void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) override;
 
 	void RunGame() override;
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
 	void ChangeTurn(EPlayer currentPlayer) override;
-	void AddBoardObserver(EPlayer player, IBoardObserverPtr observer) override;
-
-public:
-	void OnBoardUpdated() override;
 
 private:
 	PlayerPtr m_player;
 	ComputerPtr m_computer;
 	EPlayer m_currentPlayer;
+	IBoardObserverPtr m_boardObserver;
+
+private:
+	void NotifyObserver(); // to notify observers that the board has changed
 };

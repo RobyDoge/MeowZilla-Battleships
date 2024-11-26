@@ -5,8 +5,8 @@ class Computer
 {
 
 public:
-	Computer() = default;
-	Computer(const std::shared_ptr<Board>& board);
+	Computer();
+	Computer(const BoardPtr& board);
 	~Computer() = default;
 
 	Position GenerateTarget();

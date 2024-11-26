@@ -3,7 +3,12 @@
 #include <random>
 #include "ECatOrientation.h"
 
-Computer::Computer(const std::shared_ptr<Board>& board):
+Computer::Computer()
+{
+	m_board = std::make_shared<Board>();
+}
+
+Computer::Computer(const BoardPtr& board):
 	m_board(board)
 {
 }

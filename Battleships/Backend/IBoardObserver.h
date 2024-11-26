@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-class IBoardObserver
+class IBoardObserver // will be implemented in UI
 {
 public:
 	virtual ~IBoardObserver() = default;
