@@ -49,26 +49,28 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 
 bool Board::ArePositionsValid(const std::vector<Position>& positions) const
 {
-	for (auto& position : positions)
-	{
-		if (position.x < 0 || position.x >= BOARD_SIZE - 1 || position.y < 0 || position.y >= BOARD_SIZE - 1)
-		{
-			return false;
-		}
-
-		if (m_board[position.x][position.y] != ETileType::Empty)
-		{
-			return false;
-		}
-	}
+	return CheckBorders(positions) && CheckOverlap(positions);
 }
 
 void Board::UpdateBoard(std::vector<Position> positions)
 {
 	for (auto& position : positions)
 	{
+		if(position.x + 1 < BOARD_SIZE)
+			m_board[position.x + 1][position.y] = ETileType::AreaHit;
+		if(position.x - 1 >= 0)
+			m_board[position.x - 1][position.y] = ETileType::AreaHit;
+		if(position.y + 1 < BOARD_SIZE)
+			m_board[position.x][position.y + 1] = ETileType::AreaHit;
+		if(position.y - 1 >= 0)
+			m_board[position.x][position.y - 1] = ETileType::AreaHit;
+	}
+
+	for (auto& position : positions)
+	{
 		m_board[position.x][position.y] = ETileType::Taken;
 	}
+
 }
 
 void Board::UpdateCats(std::vector<Position> positions)
@@ -117,6 +119,30 @@ bool Board::CheckHit(const Position& position)
 		//NotifyObservers();
 		return false;
 	}
+}
+
+bool Board::CheckBorders(const std::vector<Position>& positions) const
+{
+	for (auto& position : positions)
+	{
+		if (position.x < 0 || position.x >= BOARD_SIZE - 1 || position.y < 0 || position.y >= BOARD_SIZE - 1)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Board::CheckOverlap(const std::vector<Position>& positions) const
+{
+	for (auto& position : positions)
+	{
+		if (m_board[position.x][position.y] == ETileType::Taken)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void Board::RemovePieceFromCatList(const Position& position)

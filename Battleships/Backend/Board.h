@@ -46,6 +46,11 @@ public:
 
 	bool CheckHit(const Position& position);
 
+private:
+	bool CheckBorders(const std::vector<Position>& positions) const;
+	bool CheckOverlap(const std::vector<Position>& positions) const;
+
+
 
 private:
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> m_board;
