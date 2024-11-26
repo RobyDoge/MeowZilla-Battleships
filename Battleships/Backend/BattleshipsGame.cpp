@@ -40,7 +40,7 @@ void BattleshipsGame::RunGame()
 
 		if (m_currentPlayer == EPlayer::HumanPlayer)
 		{
-			target = m_player->ChooseTarget();
+			// the player will choose a position in the UI
 		}
 		else
 		{
