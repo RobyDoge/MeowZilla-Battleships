@@ -112,7 +112,6 @@ bool Board::CheckHit(const Position& position)
 		m_board[position.x][position.y] = ETileType::Hit;
 		m_remainingCats--;
 		RemovePieceFromCatList(position);
-		
 		//NotifyObservers();
 		return true;
 	}
