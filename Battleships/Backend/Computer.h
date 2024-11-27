@@ -13,7 +13,7 @@ public:
 	void GenerateCats();
 
 public:
-	std::shared_ptr<Board> GetBoard() const;
+	BoardPtr GetBoard() const;
 
 private:
 	Position GenerateRandomPosition() const;

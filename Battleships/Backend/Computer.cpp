@@ -6,6 +6,7 @@
 Computer::Computer()
 {
 	m_board = std::make_shared<Board>();
+	m_foundATarget = false;
 }
 
 Computer::Computer(const BoardPtr& board):
@@ -16,7 +17,7 @@ Computer::Computer(const BoardPtr& board):
 Position Computer::GenerateTarget() 
 {
 	Position target;
-	if (m_foundATarget)
+	if (!m_foundATarget)
 	{
 		target = GenerateRandomPosition();
 	}
@@ -24,7 +25,7 @@ Position Computer::GenerateTarget()
 	{
 		target = GenerateTargetBasedOnPreviousAttacks();
 	}
-
+	std::cout << "Computer target: " << target.x << " " << target.y << "\n";
 	m_positionsHit.push_back(target);
 	return target;
 }
@@ -55,7 +56,7 @@ void Computer::GenerateCats()
 	}
 }
 
-std::shared_ptr<Board> Computer::GetBoard() const
+BoardPtr Computer::GetBoard() const
 {
 	return m_board;
 }

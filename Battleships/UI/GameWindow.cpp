@@ -19,13 +19,13 @@ GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
     enemyBoard = new EnemyBoard(this);
     splitter->addWidget(enemyBoard);
 
-    QScreen* screen = QGuiApplication::primaryScreen();
-    QSize size = screen->size();
+    //QScreen* screen = QGuiApplication::primaryScreen();
+    //QSize size = screen->size();
 
     // Creează board-ul (tabla ta)
     PlayerBoard* board = new PlayerBoard(this);
-    //board->setFixedSize(720, 720);
-    board->setFixedSize(size.width() / 2, size.height());
+    board->setFixedSize(720, 720);
+    //board->setFixedSize(size.width() / 2, size.height());
     board->setShips(ships);
     splitter->addWidget(board);
 

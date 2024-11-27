@@ -137,7 +137,7 @@ bool Board::CheckOverlap(const std::vector<Position>& positions) const
 {
 	for (auto& position : positions)
 	{
-		if (m_board[position.x][position.y] == ETileType::Taken)
+		if (m_board[position.x][position.y] != ETileType::Empty)
 		{
 			return false;
 		}

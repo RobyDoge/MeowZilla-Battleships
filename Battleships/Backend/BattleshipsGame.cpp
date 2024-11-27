@@ -4,7 +4,8 @@ BattleshipsGame::BattleshipsGame()
 {
 	m_player = std::make_shared<Player>();
 	m_computer = std::make_shared<Computer>();
-	m_currentPlayer = EPlayer::None;
+	m_currentPlayer = EPlayer::HumanPlayer;
+	//m_boardObserver = std::make_shared<IBoardObserver>();
 }
 
 EPlayer BattleshipsGame::GetCurrentPlayer() const
@@ -69,6 +70,17 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 	{
 		ChangeTurn(currentPlayer);
 	}
+	else if (hit && currentPlayer == EPlayer::ComputerPlayer)
+	{
+		// hit successful method
+		/*
+		bool m_foundATarget; -> true
+		std::vector<Position> m_currentTargetKnownPositions; -> push_back(position)
+		bool m_previousAttackSucceeded; -> true
+
+		+ check if cat was hit
+		*/
+	}
 	NotifyObserver();
 }
 
@@ -79,5 +91,5 @@ void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 
 void BattleshipsGame::NotifyObserver()
 {
-	m_boardObserver->OnBoardUpdated();
+	//m_boardObserver->OnBoardUpdated();
 }
