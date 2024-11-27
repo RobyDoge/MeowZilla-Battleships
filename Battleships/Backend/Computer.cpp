@@ -56,6 +56,18 @@ void Computer::GenerateCats()
 	}
 }
 
+void Computer::HitSuccess(const Position& position)
+{
+	m_previousAttackSucceeded = true;
+	m_currentTargetKnownPositions.push_back(position);
+	m_foundATarget = true;
+}
+
+void Computer::ResetTarget()
+{
+	m_foundATarget = false;
+}
+
 BoardPtr Computer::GetBoard() const
 {
 	return m_board;

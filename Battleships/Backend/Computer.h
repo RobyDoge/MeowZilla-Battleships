@@ -12,6 +12,8 @@ public:
 	Position GenerateTarget();
 	void GenerateCats();
 
+	void HitSuccess(const Position& position);
+	void ResetTarget();
 public:
 	BoardPtr GetBoard() const;
 
