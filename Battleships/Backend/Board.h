@@ -47,6 +47,7 @@ public:
 
 	bool CheckHit(const Position& position);
 	void SetCatDead(bool isDead);
+	bool IsCatDead() const;
 
 private:
 	bool CheckBorders(const std::vector<Position>& positions) const;

@@ -63,9 +63,17 @@ void Computer::HitSuccess(const Position& position)
 	m_foundATarget = true;
 }
 
+void Computer::HitMiss(const Position& position)
+{
+	m_previousAttackSucceeded = false;
+}
+
 void Computer::ResetTarget()
 {
 	m_foundATarget = false;
+	m_currentTargetKnownPositions.clear();
+	m_previousAttackSucceeded = false;
+
 }
 
 BoardPtr Computer::GetBoard() const
@@ -100,15 +108,15 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 		if (catOrientation == ECatOrientation::Horizontal)
 		{
 			validHits = ValidatePossibleHits({
-				{ m_currentTargetKnownPositions.back().x--, m_currentTargetKnownPositions.back().y },
-				{ m_currentTargetKnownPositions.back().x++, m_currentTargetKnownPositions.back().y }
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y-- },
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y++ }
 				});
 		}
 		else
 		{
 			validHits = ValidatePossibleHits({
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y },
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y }
+				{ m_currentTargetKnownPositions.back().x--, m_currentTargetKnownPositions.back().y },
+				{ m_currentTargetKnownPositions.back().x++, m_currentTargetKnownPositions.back().y }
 				});
 		}
 	}
@@ -116,7 +124,7 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 	{
 		for (int index = 0; index < m_currentTargetKnownPositions.size()-1; index++)
 		{
-			if (catOrientation == ECatOrientation::Horizontal)
+			if (catOrientation == ECatOrientation::Vertical)
 			{
 				validHits = ValidatePossibleHits({
 					{ m_currentTargetKnownPositions[index].x--, m_currentTargetKnownPositions[index].y },

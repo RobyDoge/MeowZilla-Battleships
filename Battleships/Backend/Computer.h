@@ -13,6 +13,7 @@ public:
 	void GenerateCats();
 
 	void HitSuccess(const Position& position);
+	void HitMiss(const Position& position);
 	void ResetTarget();
 public:
 	BoardPtr GetBoard() const;

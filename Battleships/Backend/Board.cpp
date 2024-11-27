@@ -128,6 +128,11 @@ void Board::SetCatDead(bool isDead)
 	m_isCatDead = isDead;
 }
 
+bool Board::IsCatDead() const
+{
+	return m_isCatDead;
+}
+
 bool Board::CheckBorders(const std::vector<Position>& positions) const
 {
 	for (auto& position : positions)

@@ -59,7 +59,9 @@ int main() {
 
         if (game->GetCurrentPlayer() == EPlayer::HumanPlayer) {
             std::cout << "Enter position: ";
-            std::cin >> target.x >> target.y;
+            //std::cin >> target.x >> target.y;
+            target.x = 1;
+            target.y = 1;
         }
         else {
             target = game->GetComputer()->GenerateTarget();

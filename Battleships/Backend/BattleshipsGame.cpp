@@ -68,18 +68,23 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 
 	if (!hit)
 	{
+		if (currentPlayer == EPlayer::ComputerPlayer)
+		{
+			m_computer->HitMiss(position);
+		}
 		ChangeTurn(currentPlayer);
 	}
-	else if (hit && currentPlayer == EPlayer::ComputerPlayer)
+	else
 	{
-		// hit successful method
-		/*
-		bool m_foundATarget; -> true
-		std::vector<Position> m_currentTargetKnownPositions; -> push_back(position)
-		bool m_previousAttackSucceeded; -> true
-
-		+ check if cat was hit
-		*/
+		if ( currentPlayer == EPlayer::ComputerPlayer)
+		{
+			m_computer->HitSuccess(position);
+			if(m_computer->GetBoard()->IsCatDead())
+			{
+				m_computer->ResetTarget();
+				m_computer->GetBoard()->SetCatDead(false);
+			}
+		}
 	}
 	NotifyObserver();
 }
