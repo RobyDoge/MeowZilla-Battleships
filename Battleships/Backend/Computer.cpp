@@ -108,15 +108,15 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 		if (catOrientation == ECatOrientation::Horizontal)
 		{
 			validHits = ValidatePossibleHits({
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y-- },
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y++ }
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y-1 },
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y+1 }
 				});
 		}
 		else
 		{
 			validHits = ValidatePossibleHits({
-				{ m_currentTargetKnownPositions.back().x--, m_currentTargetKnownPositions.back().y },
-				{ m_currentTargetKnownPositions.back().x++, m_currentTargetKnownPositions.back().y }
+				{ m_currentTargetKnownPositions.back().x-1, m_currentTargetKnownPositions.back().y },
+				{ m_currentTargetKnownPositions.back().x+1, m_currentTargetKnownPositions.back().y }
 				});
 		}
 	}
@@ -127,15 +127,15 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 			if (catOrientation == ECatOrientation::Vertical)
 			{
 				validHits = ValidatePossibleHits({
-					{ m_currentTargetKnownPositions[index].x--, m_currentTargetKnownPositions[index].y },
-					{ m_currentTargetKnownPositions[index].x++, m_currentTargetKnownPositions[index].y }
+					{ m_currentTargetKnownPositions[index].x-1, m_currentTargetKnownPositions[index].y },
+					{ m_currentTargetKnownPositions[index].x+1, m_currentTargetKnownPositions[index].y }
 					});
 			}
 			else
 			{
 				validHits = ValidatePossibleHits({
-					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y-- },
-					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y++ }
+					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y-1 },
+					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y+1 }
 					});
 			}
 			if (!validHits.empty())
@@ -143,6 +143,14 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 				break;
 			}
 		}
+	}
+
+	//We don't know the cat is dead so we might get out of bounds
+	//TODO: Fix this
+	if (validHits.empty())
+	{
+		ResetTarget();
+		return GenerateRandomPosition();
 	}
 
 	auto chosenPosition = ChooseRandomPosition(validHits);
