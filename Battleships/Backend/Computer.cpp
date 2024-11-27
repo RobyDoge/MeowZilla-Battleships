@@ -9,8 +9,8 @@ Computer::Computer()
 	m_foundATarget = false;
 }
 
-Computer::Computer(const BoardPtr& board):
-	m_board(board)
+Computer::Computer(BoardPtr board):
+	m_board(std::move(board))
 {
 }
 
@@ -35,21 +35,21 @@ void Computer::GenerateCats()
 	std::vector<ECatSize> catsToBeGenerated = { ECatSize::Small, ECatSize::Medium,ECatSize::Medium, ECatSize::Large ,ECatSize::Large };
 	for (auto cat : catsToBeGenerated)
 	{
-		ECatOrientation orientation = static_cast<ECatOrientation>(rand() % 2 + 1);
+		ECatOrientation orientation = static_cast<ECatOrientation>(GetRandomNumber(1,2));
 		if (orientation == ECatOrientation::Horizontal)
 		{
-			Position possiblePosition = { rand() % 10, rand() % (10 - static_cast<int>(cat)) };
+			Position possiblePosition = { GetRandomNumber(0,9),GetRandomNumber(0,9 - static_cast<int>(cat)) };
 			while (!m_board->TryPlaceCat(possiblePosition, cat, orientation))
 			{
-				possiblePosition = { rand() % 10, rand() % (10 - static_cast<int>(cat)) };
+				possiblePosition = { GetRandomNumber(0,9),  GetRandomNumber(0,9 - static_cast<int>(cat))};
 			}
 		}
 		else
 		{
-			Position possiblePosition = { rand() % (10 - static_cast<int>(cat)), rand() % 10 };
+			Position possiblePosition = { GetRandomNumber(0, 9 - static_cast<int>(cat)), GetRandomNumber (0,9)};
 			while (!m_board->TryPlaceCat(possiblePosition, cat, orientation))
 			{
-				possiblePosition = { rand() % (10 - static_cast<int>(cat)), rand() % 10 };
+				possiblePosition = { GetRandomNumber(0,9 - static_cast<int>(cat)), GetRandomNumber(0,9)};
 			}
 		}
 
@@ -77,7 +77,7 @@ Position Computer::GenerateRandomPosition() const
 {
 	while (true)
 	{
-		Position possiblePosition = { rand() % 10, rand() % 10 };
+		Position possiblePosition = { GetRandomNumber(0,9), GetRandomNumber (0,9)};
 		if (std::ranges::find(m_positionsHit, possiblePosition) == m_positionsHit.end())
 		{
 			return possiblePosition;
@@ -199,3 +199,12 @@ Position Computer::ChooseRandomPosition(const std::vector<Position>& possibleHit
 	std::ranges::shuffle(copy, g);
 	return copy[0];
 }
+
+int Computer::GetRandomNumber(const int min, const int max)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(min, max);
+	return dis(gen);
+}
+
