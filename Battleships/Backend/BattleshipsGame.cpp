@@ -78,12 +78,14 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 	{
 		if ( currentPlayer == EPlayer::ComputerPlayer)
 		{
-			if (m_computer->GetBoard()->IsCatDead())
+			if (currentBoard->IsCatDead())
 			{
 				m_computer->ResetTarget();
-				m_computer->GetBoard()->SetCatDead(false);
+				currentBoard->SetCatDead(false);
+				
 			}
-			m_computer->HitSuccess(position);
+			else
+				m_computer->HitSuccess(position);
 			
 		}
 	}

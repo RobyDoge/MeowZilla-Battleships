@@ -81,7 +81,6 @@ int main() {
             std::cout << std::endl;
         }
 
-        // End game condition
         if (playerBoard->GetRemainingCats() == 0 ||
             computerBoard->GetRemainingCats() == 0) {
             break;

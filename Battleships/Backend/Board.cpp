@@ -48,8 +48,28 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 }
 
 
+void Board::RemoveCat(const Position& position)
+{
+	m_cats[FindCat(position)].clear();
+}
 
-bool Board::ArePositionsValid(const std::vector<Position>& positions) const
+int Board::FindCat(const Position& position)
+{
+	for (int i = 0; i < TOTAL_CATS; i++)
+	{
+		auto& cat = m_cats[i];
+		for (auto& catPosition : cat)
+		{
+			if (catPosition == position)
+			{
+				return i;
+			}
+		}
+	}
+	return -1;
+}
+
+bool Board::ArePositionsValid(const std::vector<Position>& positions)
 {
 	return CheckBorders(positions) && CheckOverlap(positions);
 }
@@ -75,7 +95,7 @@ void Board::UpdateBoard(std::vector<Position> positions)
 
 }
 
-void Board::UpdateCats(std::vector<Position> positions)
+void Board::AddCat(std::vector<Position> positions)
 {
 	for (int i = 0; i < TOTAL_CATS; i++)
 	{
@@ -85,9 +105,24 @@ void Board::UpdateCats(std::vector<Position> positions)
 			{
 				m_cats[i].push_back(position);
 			}
+			break;
 		}
 	}
 }
+
+//void Board::UpdateCats(std::vector<Position> positions)
+//{
+//	for (int i = 0; i < TOTAL_CATS; i++)
+//	{
+//		if (m_cats[i].empty())
+//		{
+//			for(auto& position : positions)
+//			{
+//				m_cats[i].push_back(position);
+//			}
+//		}
+//	}
+//}
 
 bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
 {
@@ -95,7 +130,8 @@ bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation 
 	if (ArePositionsValid(catPositions))
 	{
 		UpdateBoard(catPositions);
-		UpdateCats(catPositions);
+		AddCat(catPositions);
+		//UpdateCats(catPositions);
 		//NotifyObservers();
 		return true;
 	}
@@ -115,11 +151,31 @@ bool Board::CheckHit(const Position& position)
 		//NotifyObservers();
 		return true;
 	}
-	else
+	
+	m_board[position.x][position.y] = ETileType::Miss;
+	//NotifyObservers();
+	return false;
+}
+
+void Board::RemovePieceFromCatList(const Position& position)
+{
+	bool wasRemoved = false;
+	for (int i = 0; i < TOTAL_CATS; i++)
 	{
-		m_board[position.x][position.y] = ETileType::Miss;
-		//NotifyObservers();
-		return false;
+		auto& cat = m_cats[i];
+		for (auto it = cat.begin(); it != cat.end(); it++)
+		{
+			if (*it == position)
+			{
+				cat.erase(it);
+				wasRemoved = true;
+				break;
+			}
+		}
+		if (cat.size()==0 && wasRemoved == true)
+		{
+			m_isCatDead = true;
+		}
 	}
 }
 
@@ -157,27 +213,7 @@ bool Board::CheckOverlap(const std::vector<Position>& positions) const
 	return true;
 }
 
-void Board::RemovePieceFromCatList(const Position& position)
-{
-	bool wasRemoved = false;
-	for (int i = 0; i < TOTAL_CATS; i++)
-	{
-		auto& cat = m_cats[i];
-		for (auto it = cat.begin(); it != cat.end(); it++)
-		{
-			if (*it == position)
-			{
-				cat.erase(it);
-				wasRemoved = true;
-				break;
-			}
-		}
-		if (cat.empty()&& wasRemoved == true)
-		{
-			m_isCatDead = true;
-		}
-	}
-}
+
 
 std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSize type,
 	ECatOrientation orientation)
