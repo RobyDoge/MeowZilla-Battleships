@@ -110,20 +110,6 @@ void Board::AddCat(std::vector<Position> positions)
 	}
 }
 
-//void Board::UpdateCats(std::vector<Position> positions)
-//{
-//	for (int i = 0; i < TOTAL_CATS; i++)
-//	{
-//		if (m_cats[i].empty())
-//		{
-//			for(auto& position : positions)
-//			{
-//				m_cats[i].push_back(position);
-//			}
-//		}
-//	}
-//}
-
 bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
 {
 	std::vector<Position> catPositions = CalculateCatPositions(position, type, orientation);
@@ -131,8 +117,6 @@ bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation 
 	{
 		UpdateBoard(catPositions);
 		AddCat(catPositions);
-		//UpdateCats(catPositions);
-		//NotifyObservers();
 		return true;
 	}
 	else
@@ -148,12 +132,10 @@ bool Board::CheckHit(const Position& position)
 		m_board[position.x][position.y] = ETileType::Hit;
 		m_remainingCats--;
 		RemovePieceFromCatList(position);
-		//NotifyObservers();
 		return true;
 	}
 	
 	m_board[position.x][position.y] = ETileType::Miss;
-	//NotifyObservers();
 	return false;
 }
 

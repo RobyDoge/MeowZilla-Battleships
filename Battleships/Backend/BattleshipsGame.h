@@ -14,6 +14,8 @@ public:
 	ComputerPtr GetComputer() const;
 
 public:
+	void SetBoardObserver(IBoardObserverPtr observer) override;
+
 	void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) override;
 
 	void RunGame() override;

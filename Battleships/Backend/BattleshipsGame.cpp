@@ -5,7 +5,6 @@ BattleshipsGame::BattleshipsGame()
 	m_player = std::make_shared<Player>();
 	m_computer = std::make_shared<Computer>();
 	m_currentPlayer = EPlayer::HumanPlayer;
-	//m_boardObserver = std::make_shared<IBoardObserver>();
 }
 
 EPlayer BattleshipsGame::GetCurrentPlayer() const
@@ -21,6 +20,11 @@ PlayerPtr BattleshipsGame::GetPlayer() const
 ComputerPtr BattleshipsGame::GetComputer() const
 {
 	return m_computer;
+}
+
+void BattleshipsGame::SetBoardObserver(IBoardObserverPtr observer)
+{
+	m_boardObserver = observer;
 }
 
 void BattleshipsGame::PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation)
@@ -61,8 +65,6 @@ void BattleshipsGame::RunGame()
 
 void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 {
-	// DOING THIS BASED ON TURN INSTEAD, THE INTERFACE SHOULDN'T INTERACT WITH A BOARD OBJECT
-
 	auto currentBoard = (currentPlayer == EPlayer::HumanPlayer) ? m_computer->GetBoard() : m_player->GetBoard();
 	bool hit = currentBoard->CheckHit(position);
 
@@ -81,11 +83,13 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 			if (currentBoard->IsCatDead())
 			{
 				m_computer->ResetTarget();
+				m_computer->GetBoard()->SetCatDead(false);
 				currentBoard->SetCatDead(false);
 			}
 			else
+			{
 				m_computer->HitSuccess(position);
-			
+			}
 		}
 	}
 	NotifyObserver();
@@ -98,5 +102,8 @@ void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 
 void BattleshipsGame::NotifyObserver()
 {
-	//m_boardObserver->OnBoardUpdated();
+	if (m_boardObserver)
+	{
+		m_boardObserver->OnBoardUpdated();
+	}
 }

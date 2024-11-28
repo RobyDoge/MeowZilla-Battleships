@@ -40,7 +40,6 @@ public:
 
 public:
 	void UpdateBoard(std::vector<Position> positions);
-	//void UpdateCats(std::vector<Position> positions);
 	void AddCat(std::vector<Position> positions);
 	void RemoveCat(const Position& position);
 	int FindCat(const Position& position);
