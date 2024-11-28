@@ -15,5 +15,9 @@ public:
 	virtual void RunGame() = 0;
 	virtual void AttackAtPosition(Position position, EPlayer currentPlayer) = 0;
 	virtual void ChangeTurn(EPlayer currentPlayer) = 0;
+
+	static IGamePtr CreateGame();	
 };
+
+using IGamePtr = std::shared_ptr<IGame>;
 

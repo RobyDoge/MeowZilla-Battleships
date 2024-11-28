@@ -22,6 +22,8 @@ public:
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
 	void ChangeTurn(EPlayer currentPlayer) override;
 
+	static IGamePtr CreateGame();
+
 private:
 	PlayerPtr m_player;
 	ComputerPtr m_computer;
