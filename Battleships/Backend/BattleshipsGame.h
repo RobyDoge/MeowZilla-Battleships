@@ -31,5 +31,5 @@ private:
 	IBoardObserverPtr m_boardObserver;
 
 private:
-	void NotifyObserver(); // to notify observers that the board has changed
+	void NotifyObserver(Position position, EPlayer currentPlayer); // to notify observers that the board has changed
 };

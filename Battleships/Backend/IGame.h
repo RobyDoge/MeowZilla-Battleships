@@ -3,6 +3,9 @@
 #include "EPlayer.h"
 #include "IBoardObserver.h"
 
+class IGame;
+using IGamePtr = std::shared_ptr<IGame>;
+
 class IGame 
 {
 public:
@@ -16,8 +19,6 @@ public:
 	virtual void AttackAtPosition(Position position, EPlayer currentPlayer) = 0;
 	virtual void ChangeTurn(EPlayer currentPlayer) = 0;
 
-	static IGamePtr CreateGame();	
+	static IGamePtr CreateGame();
 };
-
-using IGamePtr = std::shared_ptr<IGame>;
 
