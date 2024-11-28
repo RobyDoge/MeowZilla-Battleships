@@ -20,10 +20,12 @@ Position Computer::GenerateTarget()
 	if (!m_foundATarget)
 	{
 		target = GenerateRandomPosition();
+		std::cout << "Target generated randomly" << std::endl << "------------------------------------------" << std::endl;
 	}
 	else
 	{
 		target = GenerateTargetBasedOnPreviousAttacks();
+		std::cout << "Target generated based on previous attacks" << std::endl << "------------------------------------------" << std::endl;
 	}
 	std::cout << "Computer target: " << target.x << " " << target.y << "\n";
 	m_positionsHit.push_back(target);

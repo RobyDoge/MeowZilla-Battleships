@@ -69,16 +69,19 @@ int main() {
 
         game->AttackAtPosition(target, game->GetCurrentPlayer());
         std::cout << "Current turn: " << (int)game->GetCurrentPlayer() << "\n";
-        std::cout << "Computer board:            Player board: \n";
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                PrintColoredCell((int)computerBoard->GetBoard()[i][j]);
-            }
-            std::cout << "   |   ";
-            for (int j = 0; j < 10; j++) {
-                PrintColoredCell((int)playerBoard->GetBoard()[i][j]);
-            }
-            std::cout << std::endl;
+        if(game->GetCurrentPlayer() == EPlayer::ComputerPlayer)
+        {
+	        std::cout << "Computer board:            Player board: \n";
+        	for (int i = 0; i < 10; i++) {
+        		for (int j = 0; j < 10; j++) {
+        			PrintColoredCell((int)computerBoard->GetBoard()[i][j]);
+        		}
+        		std::cout << "   |   ";
+        		for (int j = 0; j < 10; j++) {
+        			PrintColoredCell((int)playerBoard->GetBoard()[i][j]);
+        		}
+        		std::cout << std::endl;
+        	}
         }
 
         if (playerBoard->GetRemainingCats() == 0 ||

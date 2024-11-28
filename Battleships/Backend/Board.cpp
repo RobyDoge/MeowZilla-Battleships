@@ -168,13 +168,13 @@ void Board::RemovePieceFromCatList(const Position& position)
 			if (*it == position)
 			{
 				cat.erase(it);
-				wasRemoved = true;
-				break;
+				if (cat.size() == 0)
+				{
+					m_isCatDead = true;
+				}
+				
+				return;
 			}
-		}
-		if (cat.size()==0 && wasRemoved == true)
-		{
-			m_isCatDead = true;
 		}
 	}
 }
