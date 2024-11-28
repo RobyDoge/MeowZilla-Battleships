@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include "ui_GameWindow.h"
-#include "board.h"
+#include "UIBoard.h"
 #include "EnemyBoard.h"
 #include "Ship.h"
 #include "IGame.h"
