@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include "ui_MainWindow.h"
+#include "SetupWindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -14,8 +15,7 @@ public:
 private:
 	void OpenSetupWindow();
 
-
-
 private:
 	Ui::MainWindowClass ui;
+	SetupWindow* m_setUpWindow;
 };

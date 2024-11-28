@@ -3,7 +3,7 @@
 #include <QGraphicsScene>
 
 PlayerBoard::PlayerBoard(QWidget* parent)
-    : Board(parent) {
+    : UIBoard(parent) {
     setFixedSize(1400, 750);
     scene->setSceneRect(0, 0, 700, 700);
 

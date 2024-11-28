@@ -3,7 +3,7 @@
 #include <QPainter>
 
 EnemyBoard::EnemyBoard(QWidget* parent)
-    : Board(parent) ,cellSize(70) {
+    : UIBoard(parent) ,cellSize(70) {
 }
 
 

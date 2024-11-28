@@ -102,7 +102,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="UIBoard.cpp" />
     <ClCompile Include="EnemyBoard.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -119,7 +119,7 @@
     <QtMoc Include="SetupWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Board.h" />
+    <QtMoc Include="UIBoard.h" />
     <QtMoc Include="MainWindow.h" />
     <QtMoc Include="Ship.h" />
   </ItemGroup>

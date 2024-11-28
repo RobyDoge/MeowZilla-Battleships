@@ -37,3 +37,8 @@ GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
 
 GameWindow::~GameWindow()
 {}
+
+void GameWindow::SetGame(IGamePtr game)
+{
+    m_game = game;
+}

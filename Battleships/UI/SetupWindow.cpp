@@ -3,7 +3,7 @@
 #include <QVBoxLayout>
 
 SetupWindow::SetupWindow(QWidget* parent) : QWidget(parent) {
-    setWindowTitle("Setup Ships");
+    setWindowTitle("Setup Cats");
     showMaximized(); // Sau folosim fullscreen
 
     // Layout principal
@@ -21,8 +21,15 @@ SetupWindow::SetupWindow(QWidget* parent) : QWidget(parent) {
     connect(confirmButton, &QPushButton::clicked, this, &SetupWindow::confirmSetup);
 }
 
-void SetupWindow::confirmSetup() {
-    auto* gameWindow = new GameWindow(board->getShips());
-    gameWindow->show();
+void SetupWindow::SetGame(IGamePtr game)
+{
+    m_game = game;
+}
+
+void SetupWindow::confirmSetup() 
+{
+    m_gameWindow = new GameWindow(board->getShips());
+    m_gameWindow->SetGame(m_game);
+    m_gameWindow->show();
     this->destroy();
 }

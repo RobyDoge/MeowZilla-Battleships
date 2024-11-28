@@ -49,7 +49,7 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
+    <ClCompile Include="UIBoard.cpp">
       <Filter>Source Files\Boards</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBoard.cpp">
@@ -72,7 +72,7 @@
     <QtMoc Include="GameWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Board.h">
+    <QtMoc Include="UIBoard.h">
       <Filter>Header Files\Boards</Filter>
     </QtMoc>
     <QtMoc Include="EnemyBoard.h">
