@@ -100,7 +100,7 @@ void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 	m_currentPlayer = (currentPlayer == EPlayer::HumanPlayer) ? EPlayer::ComputerPlayer : EPlayer::HumanPlayer;
 }
 
-IGamePtr BattleshipsGame::CreateGame()
+IGamePtr IGame::CreateGame()
 {
 	return std::make_shared<BattleshipsGame>();
 }
