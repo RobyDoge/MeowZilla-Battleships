@@ -23,8 +23,6 @@ void Board::InitializeBoard()
 	}
 
 	m_remainingCats = TOTAL_CAT_POSITIONS;
-
-	std::cout << "board initialized" << std::endl;
 }
 
 std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> Board::GetBoard() const

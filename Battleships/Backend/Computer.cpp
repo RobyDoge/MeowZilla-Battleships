@@ -83,6 +83,26 @@ BoardPtr Computer::GetBoard() const
 	return m_board;
 }
 
+std::vector<Position> Computer::GetPositionsHit() const
+{
+	return m_positionsHit;
+}
+
+bool Computer::FoundATarget() const
+{
+	return m_foundATarget;
+}
+
+std::vector<Position> Computer::GetCurrentTargetKnownPositions() const
+{
+	return m_currentTargetKnownPositions;
+}
+
+bool Computer::PreviousAttackSucceeded() const
+{
+	return m_previousAttackSucceeded;
+}
+
 Position Computer::GenerateRandomPosition() const
 {
 	while (true)

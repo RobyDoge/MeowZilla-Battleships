@@ -15,8 +15,13 @@ public:
 	void HitSuccess(const Position& position);
 	void HitMiss(const Position& position);
 	void ResetTarget();
+
 public:
 	BoardPtr GetBoard() const;
+	std::vector<Position> GetPositionsHit() const;
+	bool FoundATarget() const;
+	std::vector<Position> GetCurrentTargetKnownPositions() const;
+	bool PreviousAttackSucceeded() const;
 
 private:
 	Position GenerateRandomPosition() const;
