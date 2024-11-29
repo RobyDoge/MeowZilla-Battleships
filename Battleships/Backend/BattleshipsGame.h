@@ -22,7 +22,7 @@ public:
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
 	void ChangeTurn(EPlayer currentPlayer) override;
 
-	static IGamePtr CreateGame();
+	//static IGamePtr CreateGame();
 
 private:
 	PlayerPtr m_player;

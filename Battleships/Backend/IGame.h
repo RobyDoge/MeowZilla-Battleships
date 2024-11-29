@@ -3,8 +3,8 @@
 #include "EPlayer.h"
 #include "IBoardObserver.h"
 
-class IGame;
-using IGamePtr = std::shared_ptr<IGame>;
+
+using IGamePtr = std::shared_ptr<class IGame>;
 
 class IGame 
 {
