@@ -3,9 +3,9 @@
 #include <QGraphicsScene>
 #include <vector>
 #include "ship.h"
-#include "board.h"
+#include "UIBoard.h"
 #include <QImage>
-class PlayerBoard: public Board {
+class PlayerBoard: public UIBoard {
     Q_OBJECT
 public:
 
@@ -25,6 +25,5 @@ private:
     QImage backGroundPixmap;
     QImage cellPixmap;
     std::vector<Ship*> ships;
-    bool isValidPlacement(Ship* ship, int x, int y, bool rotated);
 };
 

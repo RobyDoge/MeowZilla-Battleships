@@ -1,9 +1,9 @@
-﻿#include "Board.h"
+﻿#include "UIBoard.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 
-Board::Board(QWidget* parent)
+UIBoard::UIBoard(QWidget* parent)
     : QGraphicsView(parent), cellSize(70), gridVisible(false) {
     scene = new QGraphicsScene(this);
     setScene(scene);
@@ -18,9 +18,9 @@ Board::Board(QWidget* parent)
     backGroundImage.load(":/Assets/background.jpg");
 }
 
-Board::~Board() {}
+UIBoard::~UIBoard() {}
 
-void Board::initializeBoard(std::array<std::list<Position>, 5> catPositions) {
+void UIBoard::initializeBoard(std::array<std::list<UIPosition>, 5> catPositions) {
     cells.resize(10, std::vector<QGraphicsPixmapItem*>(10, nullptr));
 
 
@@ -50,7 +50,7 @@ void Board::initializeBoard(std::array<std::list<Position>, 5> catPositions) {
     }
 }
 
-void Board::drawBackground(QPainter* painter, const QRectF& rect) {
+void UIBoard::drawBackground(QPainter* painter, const QRectF& rect) {
     // Desenează fundalul
     QRectF boardArea(0, 0, 700, 700);
 
@@ -65,14 +65,14 @@ void Board::drawBackground(QPainter* painter, const QRectF& rect) {
             painter->drawImage(cellRect, cellPixmap);  // Desenează asset-ul celulei la fiecare poziție
         }
     }
-    std::array<std::list<Position>, 5> catPositions;
+    std::array<std::list<UIPosition>, 5> catPositions;
     for (int i = 0; i < 5; i++) {
         catPositions[i] = { { { 0, i }, { 1, i }, { 2, i }, { 3, i }, { 4, i } } };
     }
     initializeBoard(catPositions);
 }
 
-void Board::updateCell(int row, int col, const QPixmap& pixmap) {
+void UIBoard::updateCell(int row, int col, const QPixmap& pixmap) {
     if (row >= 0 && row < 10 && col >= 0 && col < 10) {
         QPixmap resizedPixmap = pixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
         cells[row][col]->setPixmap(resizedPixmap);
@@ -80,13 +80,13 @@ void Board::updateCell(int row, int col, const QPixmap& pixmap) {
 }
 
 // Setează vizibilitatea întregului grid
-void Board::setGridVisibility(bool visible) {
+void UIBoard::setGridVisibility(bool visible) {
     gridVisible = visible;
     update();  // Reîmprospătează scena pentru a aplica modificările
 }
 
 // Setează vizibilitatea unei celule individuale
-void Board::setCellVisible(int row, int col, bool visible) {
+void UIBoard::setCellVisible(int row, int col, bool visible) {
     if (row >= 0 && row < 10 && col >= 0 && col < 10) {
         cells[row][col]->setVisible(visible);
     }

@@ -14,11 +14,15 @@ public:
 	ComputerPtr GetComputer() const;
 
 public:
+	void SetBoardObserver(IBoardObserverPtr observer) override;
+
 	void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) override;
 
 	void RunGame() override;
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
 	void ChangeTurn(EPlayer currentPlayer) override;
+
+	//static IGamePtr CreateGame();
 
 private:
 	PlayerPtr m_player;
@@ -27,5 +31,5 @@ private:
 	IBoardObserverPtr m_boardObserver;
 
 private:
-	void NotifyObserver(); // to notify observers that the board has changed
+	void NotifyObserver(Position position, EPlayer currentPlayer); // to notify observers that the board has changed
 };

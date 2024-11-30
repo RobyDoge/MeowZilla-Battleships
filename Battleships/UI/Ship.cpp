@@ -1,5 +1,6 @@
 ﻿#include "Ship.h"
 #include <QPen>
+#include <QDebug>
 
 Ship::Ship(int size, QColor color, QGraphicsItem* parent)
     : QGraphicsRectItem(parent), size(size), horizontal(true) {
@@ -74,6 +75,9 @@ void Ship::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void Ship::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     emit shipDropped(this);
+    //prit a message to the console
+   QDebug deb = qDebug();
+    deb << "Ship dropped at: " << pos().x() << ", " << pos().y();
     QGraphicsRectItem::mouseReleaseEvent(event);
 }
 

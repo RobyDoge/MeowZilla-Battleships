@@ -5,9 +5,9 @@
 #include <QGraphicsScene>
 #include <QImage>
 #include <QMouseEvent>
-#include "Board.h"
+#include "UIBoard.h"
 
-class EnemyBoard : public Board {
+class EnemyBoard : public UIBoard {
     Q_OBJECT
 
 public:

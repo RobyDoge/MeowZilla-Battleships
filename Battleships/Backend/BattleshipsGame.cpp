@@ -4,7 +4,7 @@ BattleshipsGame::BattleshipsGame()
 {
 	m_player = std::make_shared<Player>();
 	m_computer = std::make_shared<Computer>();
-	m_currentPlayer = EPlayer::None;
+	m_currentPlayer = EPlayer::HumanPlayer;
 }
 
 EPlayer BattleshipsGame::GetCurrentPlayer() const
@@ -22,11 +22,16 @@ ComputerPtr BattleshipsGame::GetComputer() const
 	return m_computer;
 }
 
+void BattleshipsGame::SetBoardObserver(IBoardObserverPtr observer)
+{
+	m_boardObserver = observer;
+}
+
 void BattleshipsGame::PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation)
 {
 	if (m_player->GetBoard()->TryPlaceCat(position, size, orientation))
 	{
-		NotifyObserver();
+		NotifyObserver(position, EPlayer::HumanPlayer);
 	}
 }
 
@@ -60,16 +65,34 @@ void BattleshipsGame::RunGame()
 
 void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 {
-	// DOING THIS BASED ON TURN INSTEAD, THE INTERFACE SHOULDN'T INTERACT WITH A BOARD OBJECT
-
 	auto currentBoard = (currentPlayer == EPlayer::HumanPlayer) ? m_computer->GetBoard() : m_player->GetBoard();
 	bool hit = currentBoard->CheckHit(position);
 
 	if (!hit)
 	{
+		if (currentPlayer == EPlayer::ComputerPlayer)
+		{
+			m_computer->HitMiss(position);
+		}
 		ChangeTurn(currentPlayer);
 	}
-	NotifyObserver();
+	else
+	{
+		if ( currentPlayer == EPlayer::ComputerPlayer)
+		{
+			if (currentBoard->IsCatDead())
+			{
+				m_computer->ResetTarget();
+				m_computer->GetBoard()->SetCatDead(false);
+				currentBoard->SetCatDead(false);
+			}
+			else
+			{
+				m_computer->HitSuccess(position);
+			}
+		}
+	}
+	NotifyObserver(position,currentPlayer);
 }
 
 void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
@@ -77,7 +100,15 @@ void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 	m_currentPlayer = (currentPlayer == EPlayer::HumanPlayer) ? EPlayer::ComputerPlayer : EPlayer::HumanPlayer;
 }
 
-void BattleshipsGame::NotifyObserver()
+IGamePtr IGame::CreateGame()
 {
-	m_boardObserver->OnBoardUpdated();
+	return std::make_shared<BattleshipsGame>();
+}
+
+void BattleshipsGame::NotifyObserver(Position position, EPlayer currentPlayer)
+{
+	if (m_boardObserver)
+	{
+		m_boardObserver->OnBoardUpdated(position.x, position.y, currentPlayer);
+	}
 }

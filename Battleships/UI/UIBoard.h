@@ -8,12 +8,12 @@
 #include <QPainter>
 #include <vector>
 
-struct Position {
+struct UIPosition {
     int row;
     int col;
 };
 
-class Board : public QGraphicsView {
+class UIBoard : public QGraphicsView {
     Q_OBJECT
 
 protected:
@@ -28,11 +28,11 @@ protected:
     std::vector<std::vector<QGraphicsPixmapItem*>> cells; 
 
 public:
-    Board(QWidget* parent = nullptr);
-    virtual ~Board();
+    UIBoard(QWidget* parent = nullptr);
+    virtual ~UIBoard();
 
     // Inițializează tabla
-    virtual void initializeBoard(std::array<std::list<Position>, 5> catPositions);
+    virtual void initializeBoard(std::array<std::list<UIPosition>, 5> catPositions);
 
     // Desenează fundalul
     virtual void drawBackground(QPainter* painter, const QRectF& rect) override;

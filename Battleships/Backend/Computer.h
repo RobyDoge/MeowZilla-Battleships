@@ -6,14 +6,22 @@ class Computer
 
 public:
 	Computer();
-	Computer(const BoardPtr& board);
+	Computer(BoardPtr board);
 	~Computer() = default;
 
 	Position GenerateTarget();
 	void GenerateCats();
 
+	void HitSuccess(const Position& position);
+	void HitMiss(const Position& position);
+	void ResetTarget();
+
 public:
-	std::shared_ptr<Board> GetBoard() const;
+	BoardPtr GetBoard() const;
+	std::vector<Position> GetPositionsHit() const;
+	bool FoundATarget() const;
+	std::vector<Position> GetCurrentTargetKnownPositions() const;
+	bool PreviousAttackSucceeded() const;
 
 private:
 	Position GenerateRandomPosition() const;
@@ -21,7 +29,10 @@ private:
 	Position HitRandomNeighbour(const Position& position) const;
 	ECatOrientation FindCatOrientation() const;
 	std::vector<Position> ValidatePossibleHits(const std::vector<Position>& possibleHits) const;
+
+private:
 	static Position ChooseRandomPosition(const std::vector<Position>& possibleHits);
+	static int GetRandomNumber(int min, int max);
 
 private:
 	BoardPtr m_board;
