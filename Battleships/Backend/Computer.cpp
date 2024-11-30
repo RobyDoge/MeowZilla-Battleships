@@ -3,7 +3,7 @@
 #include <random>
 #include "ECatOrientation.h"
 
-Computer::Computer()
+Computer::	Computer()
 {
 	m_board = std::make_shared<Board>();
 	m_foundATarget = false;
@@ -14,22 +14,19 @@ Computer::Computer(BoardPtr board):
 {
 }
 
-Position Computer::GenerateTarget() 
-{
-	Position target;
-	if (!m_foundATarget)
+	Position Computer::GenerateTarget() 
 	{
-		target = GenerateRandomPosition();
-		std::cout << "Target generated randomly" << std::endl << "------------------------------------------" << std::endl;
-	}
-	else
-	{
-		target = GenerateTargetBasedOnPreviousAttacks();
-		std::cout << "Target generated based on previous attacks" << std::endl << "------------------------------------------" << std::endl;
-	}
-	std::cout << "Computer target: " << target.x << " " << target.y << "\n";
-	m_positionsHit.push_back(target);
-	return target;
+		Position target;
+		if (!m_foundATarget)
+		{
+			target = GenerateRandomPosition();
+		}
+		else
+		{
+			target = GenerateTargetBasedOnPreviousAttacks();
+		}
+		m_positionsHit.push_back(target);
+		return target;
 }
 
 void Computer::GenerateCats()
