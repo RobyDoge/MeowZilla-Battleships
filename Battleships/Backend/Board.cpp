@@ -69,22 +69,26 @@ int Board::FindCatInCatList(const Position& position)
 
 void Board::RemoveCat(const Position& position)
 {
-	std::vector<Position> catPositions;
+	//int catIndex = FindCatInCatList({ position.y, position.x });
 	int catIndex = FindCatInCatList(position);
 	if (catIndex != -1)
 	{
 		for (auto& catPosition : m_cats[catIndex])
 		{
-			catPositions.push_back(catPosition);
+			
 			m_board[catPosition.x][catPosition.y] = ETileType::Empty;
-			m_board[catPosition.x + 1][catPosition.y] = ETileType::Empty;
-			m_board[catPosition.x - 1][catPosition.y] = ETileType::Empty;
-			m_board[catPosition.x][catPosition.y + 1] = ETileType::Empty;
-			m_board[catPosition.x][catPosition.y - 1] = ETileType::Empty;
+			if (catPosition.x + 1 < BOARD_SIZE)
+				m_board[catPosition.x + 1][catPosition.y] = ETileType::Empty;
+			if (catPosition.x - 1 >= 0)
+				m_board[catPosition.x - 1][catPosition.y] = ETileType::Empty;
+			if (catPosition.y + 1 < BOARD_SIZE)
+				m_board[catPosition.x][catPosition.y + 1] = ETileType::Empty;
+			if (catPosition.y - 1 >= 0)
+				m_board[catPosition.x][catPosition.y - 1] = ETileType::Empty;
 		}
-		
+		RemoveCatFromCatList(position);
 	}
-	RemoveCatFromCatList(position);
+	
 }
 
 bool Board::ArePositionsValid(const std::vector<Position>& positions)
@@ -193,7 +197,7 @@ bool Board::CheckBorders(const std::vector<Position>& positions) const
 {
 	for (auto& position : positions)
 	{
-		if (position.x < 0 || position.x >= BOARD_SIZE - 1 || position.y < 0 || position.y >= BOARD_SIZE - 1)
+		if (position.x < 0 || position.x >= BOARD_SIZE  || position.y < 0 || position.y >= BOARD_SIZE )
 		{
 			return false;
 		}

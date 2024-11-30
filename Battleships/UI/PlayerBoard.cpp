@@ -70,8 +70,12 @@ void PlayerBoard::snapToGrid(Ship* ship) {
 	{
 		horizontal = 1;
 	}
+    // use PlaceCatForPlayer from m_game with last position of ship
+    int lastX = static_cast<int>(ship->getLastPos().x()) / 70;
+    int lastY = static_cast<int>(ship->getLastPos().y()) / 70;
 
-    m_game->PlaceCatForPlayer(Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
+    m_game->PlaceCatForPlayer({lastY, lastX}, Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
+    //m_game->PlaceCatForPlayer(Position  ,Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
 
     if (uiObserver && uiObserver->WasBoardUpdated())
     {

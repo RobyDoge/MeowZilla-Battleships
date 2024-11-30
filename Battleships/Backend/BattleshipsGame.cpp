@@ -31,17 +31,16 @@ IBoardObserverPtr BattleshipsGame::GetBoardObserver()
 {
 	return m_boardObserver;
 }
-void BattleshipsGame::PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation)
+void BattleshipsGame::PlaceCatForPlayer(Position lastPosition, Position position, ECatSize size, ECatOrientation orientation)
 {
+	if(lastPosition.y >= 0)
+	{
+		m_player->GetBoard()->RemoveCat(lastPosition);
+	}
 	if (m_player->GetBoard()->TryPlaceCat(position, size, orientation))
 	{
 		NotifyObserver();
 	}
-}
-
-void BattleshipsGame::MoveCatForPlayer(Position position)
-{
-	m_player->GetBoard()->RemoveCat(position);
 }
 
 void BattleshipsGame::RunGame()
