@@ -17,6 +17,7 @@ public:
 	void SetBoardObserver(IBoardObserverPtr observer) override;
 	IBoardObserverPtr GetBoardObserver() override;
 	void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) override;
+	void MoveCatForPlayer(Position position) override;
 
 	void RunGame() override;
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;

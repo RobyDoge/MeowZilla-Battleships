@@ -46,12 +46,12 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 }
 
 
-void Board::RemoveCat(const Position& position)
+void Board::RemoveCatFromCatList(const Position& position)
 {
-	m_cats[FindCat(position)].clear();
+	m_cats[FindCatInCatList(position)].clear();
 }
 
-int Board::FindCat(const Position& position)
+int Board::FindCatInCatList(const Position& position)
 {
 	for (int i = 0; i < TOTAL_CATS; i++)
 	{
@@ -65,6 +65,26 @@ int Board::FindCat(const Position& position)
 		}
 	}
 	return -1;
+}
+
+void Board::RemoveCat(const Position& position)
+{
+	std::vector<Position> catPositions;
+	int catIndex = FindCatInCatList(position);
+	if (catIndex != -1)
+	{
+		for (auto& catPosition : m_cats[catIndex])
+		{
+			catPositions.push_back(catPosition);
+			m_board[catPosition.x][catPosition.y] = ETileType::Empty;
+			m_board[catPosition.x + 1][catPosition.y] = ETileType::Empty;
+			m_board[catPosition.x - 1][catPosition.y] = ETileType::Empty;
+			m_board[catPosition.x][catPosition.y + 1] = ETileType::Empty;
+			m_board[catPosition.x][catPosition.y - 1] = ETileType::Empty;
+		}
+		
+	}
+	RemoveCatFromCatList(position);
 }
 
 bool Board::ArePositionsValid(const std::vector<Position>& positions)

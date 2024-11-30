@@ -41,8 +41,10 @@ public:
 public:
 	void UpdateBoard(std::vector<Position> positions);
 	void AddCat(std::vector<Position> positions);
+	void RemoveCatFromCatList(const Position& position);
+	int FindCatInCatList(const Position& position);
+
 	void RemoveCat(const Position& position);
-	int FindCat(const Position& position);
 
 	bool ArePositionsValid(const std::vector<Position>& positions);
 

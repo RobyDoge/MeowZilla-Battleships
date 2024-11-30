@@ -39,6 +39,11 @@ void BattleshipsGame::PlaceCatForPlayer(Position position, ECatSize size, ECatOr
 	}
 }
 
+void BattleshipsGame::MoveCatForPlayer(Position position)
+{
+	m_player->GetBoard()->RemoveCat(position);
+}
+
 void BattleshipsGame::RunGame()
 {
 	// initial version for the run method
@@ -103,6 +108,8 @@ void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 {
 	m_currentPlayer = (currentPlayer == EPlayer::HumanPlayer) ? EPlayer::ComputerPlayer : EPlayer::HumanPlayer;
 }
+
+
 
 IGamePtr IGame::CreateGame()
 {

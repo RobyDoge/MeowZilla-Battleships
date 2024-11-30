@@ -14,6 +14,7 @@ public:
 	virtual void SetBoardObserver(IBoardObserverPtr observer) = 0;	
 	virtual IBoardObserverPtr GetBoardObserver() = 0;
 	virtual void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) = 0;
+	virtual void MoveCatForPlayer(Position position) = 0;
 
 	virtual void RunGame() = 0;
 	virtual void AttackAtPosition(Position position, EPlayer currentPlayer) = 0;
