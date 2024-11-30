@@ -12,7 +12,7 @@ class GameWindow : public QWidget
 	Q_OBJECT
 
 public:
-	GameWindow(std::vector<Ship*> ships, QWidget *parent = nullptr);
+	GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent = nullptr);
 	~GameWindow();
 
 	void SetGame(IGamePtr game);

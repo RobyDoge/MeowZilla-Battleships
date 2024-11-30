@@ -2,13 +2,13 @@
 #include "PlayerBoard.h"
 #include <QVBoxLayout>
 #include <QSplitter>
-GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
+GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
     setWindowTitle("Setup Ships");
     showMaximized(); // Sau folosim fullscreen
-
+    m_game = game;
     // Layout principal
     QVBoxLayout* layout = new QVBoxLayout(this);
     //layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
@@ -25,7 +25,6 @@ GameWindow::GameWindow(std::vector<Ship*> ships,QWidget *parent)
     // Creează board-ul (tabla ta)
     PlayerBoard* board = new PlayerBoard(this);
     board->setFixedSize(720, 720);
-    //board->setFixedSize(size.width() / 2, size.height());
     board->setShips(ships);
     splitter->addWidget(board);
 
@@ -40,5 +39,4 @@ GameWindow::~GameWindow()
 
 void GameWindow::SetGame(IGamePtr game)
 {
-    m_game = game;
 }

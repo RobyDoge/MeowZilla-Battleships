@@ -27,11 +27,15 @@ void BattleshipsGame::SetBoardObserver(IBoardObserverPtr observer)
 	m_boardObserver = observer;
 }
 
+IBoardObserverPtr BattleshipsGame::GetBoardObserver()
+{
+	return m_boardObserver;
+}
 void BattleshipsGame::PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation)
 {
 	if (m_player->GetBoard()->TryPlaceCat(position, size, orientation))
 	{
-		NotifyObserver(position, EPlayer::HumanPlayer);
+		NotifyObserver();
 	}
 }
 
@@ -92,7 +96,7 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 			}
 		}
 	}
-	NotifyObserver(position,currentPlayer);
+	NotifyObserver();
 }
 
 void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
@@ -105,10 +109,10 @@ IGamePtr IGame::CreateGame()
 	return std::make_shared<BattleshipsGame>();
 }
 
-void BattleshipsGame::NotifyObserver(Position position, EPlayer currentPlayer)
+void BattleshipsGame::NotifyObserver()
 {
 	if (m_boardObserver)
 	{
-		m_boardObserver->OnBoardUpdated(position.x, position.y, currentPlayer);
+		m_boardObserver->OnBoardUpdated();
 	}
 }

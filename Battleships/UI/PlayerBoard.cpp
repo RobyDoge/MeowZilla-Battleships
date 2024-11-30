@@ -1,7 +1,6 @@
 ﻿#include "playerboard.h"
 #include <QPainter>
 #include <QGraphicsScene>
-
 PlayerBoard::PlayerBoard(QWidget* parent)
     : UIBoard(parent) {
     setFixedSize(1400, 750);
@@ -53,23 +52,34 @@ void PlayerBoard::setShips(std::vector<Ship*> ships)
     for (int i = 0; i < ships.size(); i++)
     {
         this->ships[i]->setPos(ships[i]->pos());
+        this->ships[i]->setHorizontal(ships[i]->isHorizontal());
     }
 }
 
 void PlayerBoard::snapToGrid(Ship* ship) {
 
+    int x = static_cast<int>(ship->pos().x())/70*70;
+    int y = static_cast<int>(ship->pos().y())/70*70;
+    int horizontal;
 
-    int x = static_cast<int>(ship->pos().x() / 70) * 70;
-    int y = static_cast<int>(ship->pos().y() / 70) * 70;
+    if (ship->isHorizontal())
+	{
+		horizontal = 2;
+	}
+	else
+	{
+		horizontal = 1;
+	}
 
-    // Aici o sa trimit in backend o lista cu toate pozitiile navelor si noua pozitie a navei care o fost mutata pe tabla daca e false se pune la last pos d
-    // daca e true se pune la pozitia curenta 
-    if (x < 0 || x >= scene->width() || y < 0 || y >= scene->height())
+    m_game->PlaceCatForPlayer(Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
+
+    if (uiObserver && uiObserver->WasBoardUpdated())
     {
-        ship->setPos(ship->getLastPos().x(), ship->getLastPos().y());
+        ship->setPos( x,y);
+        uiObserver->ResetBoardUpdated();
     }
     else
     {
-        ship->setPos(x, y);
+        ship->setPos(ship->getLastPos().x(), ship->getLastPos().y());
     }
 }

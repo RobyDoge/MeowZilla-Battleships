@@ -58,6 +58,9 @@
     <ClCompile Include="PlayerBoard.cpp">
       <Filter>Source Files\Boards</Filter>
     </ClCompile>
+    <ClCompile Include="UIObserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SetupWindow.h">
@@ -92,5 +95,10 @@
     <QtUic Include="GameWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UIObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

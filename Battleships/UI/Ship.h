@@ -16,6 +16,7 @@ public:
     bool isHorizontal() const;
     void rotate();
 
+    void setHorizontal(bool horizontal);
     QPointF getLastPos();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

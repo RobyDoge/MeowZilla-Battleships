@@ -15,8 +15,7 @@ MainWindow::~MainWindow()
 void MainWindow::OpenSetupWindow()
 {
 	auto game = IGame::CreateGame();
-	m_setUpWindow = new SetupWindow();
-	m_setUpWindow->SetGame(game);
+	m_setUpWindow = new SetupWindow(game);
 	m_setUpWindow->show();
 	this->destroy();
 

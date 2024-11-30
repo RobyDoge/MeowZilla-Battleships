@@ -51,6 +51,14 @@ void Ship::rotate() {
     }
 }
 
+void Ship::setHorizontal(bool horizontal)
+{
+    if (this->horizontal != horizontal)
+	{
+		rotate();
+	}
+}
+
 QPointF Ship::getLastPos()
 {
     return lastPos;
@@ -75,7 +83,6 @@ void Ship::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void Ship::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     emit shipDropped(this);
-    //prit a message to the console
    QDebug deb = qDebug();
     deb << "Ship dropped at: " << pos().x() << ", " << pos().y();
     QGraphicsRectItem::mouseReleaseEvent(event);

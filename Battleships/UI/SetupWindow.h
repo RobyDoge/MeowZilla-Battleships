@@ -11,7 +11,7 @@ class SetupWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit SetupWindow(QWidget* parent = nullptr);
+    explicit SetupWindow(IGamePtr game,QWidget* parent = nullptr);
     void SetGame(IGamePtr game);
 
 private slots:

@@ -1,17 +1,22 @@
 ﻿#include "setupwindow.h"
 #include "GameWindow.h"
 #include <QVBoxLayout>
-
-SetupWindow::SetupWindow(QWidget* parent) : QWidget(parent) {
+#include "UIObserver.h"
+SetupWindow::SetupWindow(IGamePtr game,QWidget* parent) : QWidget(parent) {
     setWindowTitle("Setup Cats");
     showMaximized(); // Sau folosim fullscreen
-
+    
+    m_game = game;
+    auto uiObserver = std::make_shared<UIObserver>();
+    game->SetBoardObserver(uiObserver);
+    board = new PlayerBoard(this);
+    board->m_game = game;
+    board->setObserver(uiObserver);
     // Layout principal
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
 
     // Creează board-ul
-    board = new PlayerBoard(this);
     layout->addWidget(board, 0, Qt::AlignCenter); // Adaugă tabla pe mijloc
 
     // Buton de confirmare
@@ -23,13 +28,13 @@ SetupWindow::SetupWindow(QWidget* parent) : QWidget(parent) {
 
 void SetupWindow::SetGame(IGamePtr game)
 {
-    m_game = game;
+   
+
 }
 
 void SetupWindow::confirmSetup() 
 {
-    m_gameWindow = new GameWindow(board->getShips());
-    m_gameWindow->SetGame(m_game);
+    m_gameWindow = new GameWindow(board->getShips() ,m_game);
     m_gameWindow->show();
     this->destroy();
 }

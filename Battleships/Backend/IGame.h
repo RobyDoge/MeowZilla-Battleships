@@ -11,8 +11,8 @@ class IGame
 public:
 	virtual ~IGame() = default;
 
-	virtual void SetBoardObserver(IBoardObserverPtr observer) = 0;
-
+	virtual void SetBoardObserver(IBoardObserverPtr observer) = 0;	
+	virtual IBoardObserverPtr GetBoardObserver() = 0;
 	virtual void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) = 0;
 
 	virtual void RunGame() = 0;

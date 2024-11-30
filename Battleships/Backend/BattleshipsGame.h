@@ -15,7 +15,7 @@ public:
 
 public:
 	void SetBoardObserver(IBoardObserverPtr observer) override;
-
+	IBoardObserverPtr GetBoardObserver() override;
 	void PlaceCatForPlayer(Position position, ECatSize size, ECatOrientation orientation) override;
 
 	void RunGame() override;
@@ -31,5 +31,5 @@ private:
 	IBoardObserverPtr m_boardObserver;
 
 private:
-	void NotifyObserver(Position position, EPlayer currentPlayer); // to notify observers that the board has changed
+	void NotifyObserver(); // to notify observers that the board has changed
 };

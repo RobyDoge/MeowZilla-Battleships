@@ -26,7 +26,7 @@ protected:
     int cellSize = 70;               
     bool gridVisible;         
     std::vector<std::vector<QGraphicsPixmapItem*>> cells; 
-
+    bool catPlacedSuccessfully = false;
 public:
     UIBoard(QWidget* parent = nullptr);
     virtual ~UIBoard();
@@ -45,6 +45,10 @@ public:
 
     // Setează vizibilitatea unei celule individuale
     void setCellVisible(int row, int col, bool visible);
+
+    void setCatPlacedSuccessfully(bool value) { catPlacedSuccessfully = value; }
+
+    bool getCatPlacedSuccessfully() { return catPlacedSuccessfully; }
 };
 
 #endif // BOARD_H
