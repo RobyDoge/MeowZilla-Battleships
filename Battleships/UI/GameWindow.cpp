@@ -16,7 +16,7 @@ GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
     // Creează un splitter orizontal
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
     
-    enemyBoard = new EnemyBoard(this);
+    enemyBoard = new EnemyBoard(m_game,this);
     splitter->addWidget(enemyBoard);
 
     //QScreen* screen = QGuiApplication::primaryScreen();
@@ -31,6 +31,8 @@ GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
     // Setează splitter-ul ca widget principal
     splitter->setSizes({ 1, 1 }); // Fiecare widget să ocupe 50% inițial
     layout->addWidget(splitter);
+    
+    m_game->RunGame();
 
 }
 
@@ -39,4 +41,23 @@ GameWindow::~GameWindow()
 
 void GameWindow::SetGame(IGamePtr game)
 {
+}
+
+void GameWindow::RunGame()
+{
+    while (true)
+    {
+        //Position target;
+
+        //if (m_game-> == EPlayer::HumanPlayer)
+        //{
+        //    // the player will choose a position in the UI
+        //}
+        //else
+        //{
+        //    target = m_computer->GenerateTarget();
+        //}
+
+        //AttackAtPosition(target, m_currentPlayer);
+    }
 }

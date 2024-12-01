@@ -2,8 +2,8 @@
 #include <QGraphicsRectItem>
 #include <QPainter>
 
-EnemyBoard::EnemyBoard(QWidget* parent)
-    : UIBoard(parent) ,cellSize(70) {
+EnemyBoard::EnemyBoard(IGamePtr game, QWidget* parent)
+    : m_game(game), UIBoard(parent) ,cellSize(70) {
 }
 
 
@@ -16,7 +16,8 @@ void EnemyBoard::mousePressEvent(QMouseEvent* event)
     int cellSize = 70;
     int row = static_cast<int>(clickPos.y() / cellSize);
     int col = static_cast<int>(clickPos.x() / cellSize);
-
+    m_game->AttackAtPosition(Position(row, col), EPlayer::ComputerPlayer);
+    
     setCellVisible(row, col, true);
 
    

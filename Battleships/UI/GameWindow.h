@@ -16,7 +16,7 @@ public:
 	~GameWindow();
 
 	void SetGame(IGamePtr game);
-
+	void RunGame();
 private:
 	Ui::GameWindowClass ui;
 	EnemyBoard* enemyBoard;
