@@ -7,10 +7,10 @@ BattleshipsGame::BattleshipsGame()
 	m_currentPlayer = EPlayer::HumanPlayer;
 }
 
-EPlayer BattleshipsGame::GetCurrentPlayer() const
-{
-	return m_currentPlayer;
-}
+//EPlayer BattleshipsGame::GetCurrentPlayer() override
+//{
+//	return m_currentPlayer;
+//}
 
 PlayerPtr BattleshipsGame::GetPlayer() const
 {
@@ -20,6 +20,11 @@ PlayerPtr BattleshipsGame::GetPlayer() const
 ComputerPtr BattleshipsGame::GetComputer() const
 {
 	return m_computer;
+}
+
+EPlayer BattleshipsGame::GetCurrentPlayer() const
+{
+	return m_currentPlayer;
 }
 
 void BattleshipsGame::SetBoardObserver(IBoardObserverPtr observer)
@@ -45,30 +50,29 @@ void BattleshipsGame::PlaceCatForPlayer(Position lastPosition, Position position
 
 void BattleshipsGame::RunGame()
 {
-	// initial version for the run method
-	
-	while (true)
+	std::thread gameThread([this] ()
 	{
-		Position target;
 
-		if (m_currentPlayer == EPlayer::HumanPlayer)
-		{
-			// the player will choose a position in the UI
-		}
-		else
-		{
-			target = m_computer->GenerateTarget();
-		}
+		m_computer->GenerateCats();
+		NotifyComputerObserver(m_computer->GetBoard()->GetCats());//ca sa ii dau position la observer trb sa includ 
 
-		AttackAtPosition(target, m_currentPlayer);
-
-		// end game condition
-		if (m_player->GetBoard()->GetRemainingCats() == 0 ||
-			m_computer->GetBoard()->GetRemainingCats() == 0)
+		while(m_player->GetBoard()->GetRemainingCats() > 0 && m_computer->GetBoard()->GetRemainingCats() > 0)
 		{
-			break;
+			Position target;
+			if (m_currentPlayer == EPlayer::ComputerPlayer)
+			{
+				target = m_computer->GenerateTarget();
+				AttackAtPosition(target, m_currentPlayer);
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+			}
 		}
+		ChangeTurn(EPlayer::None);
 	}
+
+	);
+
+
+	gameThread.detach();
 }
 
 void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
@@ -81,6 +85,7 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 		if (currentPlayer == EPlayer::ComputerPlayer)
 		{
 			m_computer->HitMiss(position);
+			NotifyComputerHit(position, false);
 		}
 		ChangeTurn(currentPlayer);
 	}
@@ -88,6 +93,7 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 	{
 		if ( currentPlayer == EPlayer::ComputerPlayer)
 		{
+			NotifyComputerHit(position, true);
 			if (currentBoard->IsCatDead())
 			{
 				m_computer->ResetTarget();
@@ -105,7 +111,14 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 
 void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)
 {
+	
+	if (currentPlayer == EPlayer::None)
+	{
+		NotifyTurnChange(currentPlayer);
+		return;
+	}
 	m_currentPlayer = (currentPlayer == EPlayer::HumanPlayer) ? EPlayer::ComputerPlayer : EPlayer::HumanPlayer;
+	NotifyTurnChange(currentPlayer);
 }
 
 
@@ -120,5 +133,30 @@ void BattleshipsGame::NotifyObserver()
 	if (m_boardObserver)
 	{
 		m_boardObserver->OnBoardUpdated();
+	}
+
+}
+
+void BattleshipsGame::NotifyComputerObserver(std::array<std::list<Position>, TOTAL_CATS> cats)
+{
+	if (m_boardObserver)
+	{
+		m_boardObserver->OnEnemyBoardUpdated(cats);
+	}
+}
+
+void BattleshipsGame::NotifyComputerHit(Position position, bool isHit)
+{
+	if (m_boardObserver)
+	{
+		m_boardObserver->OnEnemyAttack(position, isHit);
+	}
+}
+
+void BattleshipsGame::NotifyTurnChange(EPlayer currentPlayer)
+{
+	if (m_boardObserver)
+	{
+		m_boardObserver->OnTurnChange(currentPlayer);
 	}
 }

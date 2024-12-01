@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Board.h"
 
+
 class Computer
 {
 
@@ -22,6 +23,7 @@ public:
 	bool FoundATarget() const;
 	std::vector<Position> GetCurrentTargetKnownPositions() const;
 	bool PreviousAttackSucceeded() const;
+
 
 private:
 	Position GenerateRandomPosition() const;
