@@ -2,6 +2,7 @@
 #include <memory>
 #include "EPlayer.h"
 #include "SPosition.h"
+#include <list>
 
 class IBoardObserver // will be implemented in UI
 {
