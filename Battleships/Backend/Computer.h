@@ -24,6 +24,7 @@ public:
 	std::vector<Position> GetCurrentTargetKnownPositions() const;
 	bool PreviousAttackSucceeded() const;
 
+
 private:
 	Position GenerateRandomPosition() const;
 	Position GenerateTargetBasedOnPreviousAttacks();

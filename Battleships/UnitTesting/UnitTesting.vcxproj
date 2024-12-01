@@ -103,6 +103,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoardTesting.cpp" />
     <ClCompile Include="ComputerTest.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="pch.cpp">

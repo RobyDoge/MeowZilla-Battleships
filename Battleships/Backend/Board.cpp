@@ -48,10 +48,10 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 
 void Board::RemoveCatFromCatList(const Position& position)
 {
-	m_cats[FindCatInCatList(position)].clear();
+	m_cats[FindCatInCatsList(position)].clear();
 }
 
-int Board::FindCatInCatList(const Position& position)
+int Board::FindCatInCatsList(const Position& position)
 {
 	for (int i = 0; i < TOTAL_CATS; i++)
 	{
@@ -70,7 +70,7 @@ int Board::FindCatInCatList(const Position& position)
 void Board::RemoveCat(const Position& position)
 {
 	//int catIndex = FindCatInCatList({ position.y, position.x });
-	int catIndex = FindCatInCatList(position);
+	int catIndex = FindCatInCatsList(position);
 	if (catIndex != -1)
 	{
 		for (auto& catPosition : m_cats[catIndex])

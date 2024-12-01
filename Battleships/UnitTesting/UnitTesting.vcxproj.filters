@@ -7,7 +7,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
-    <ClCompile Include="ComputerTest.cpp" />
+    <ClCompile Include="ComputerTest.cpp">
+      <Filter>UnitTesting</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardTesting.cpp">
+      <Filter>UnitTesting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -15,6 +20,9 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{a0dc6111-6994-4bce-b954-ca18e6447369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitTesting">
+      <UniqueIdentifier>{951a762a-1b6c-4e5d-8fa9-a1d32d5c5441}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
