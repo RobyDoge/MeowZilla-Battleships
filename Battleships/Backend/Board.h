@@ -34,31 +34,24 @@ public:
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> GetBoard() const;
 	int GetRemainingCats();
 	std::array<std::list<Position>, TOTAL_CATS> GetCats() const;
-
 	ETileType GetTileTypeAtPosition(const Position& position) const;
 
-
 public:
-	void UpdateBoard(std::vector<Position> positions);
-	void AddCat(std::vector<Position> positions);
-	void RemoveCatFromCatList(const Position& position);
-	int FindCatInCatsList(const Position& position);
-
-	void RemoveCat(const Position& position);
-
-	bool ArePositionsValid(const std::vector<Position>& positions);
-
 	bool TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation);
-
 	bool CheckHit(const Position& position);
 	void SetCatDead(bool isDead);
 	bool IsCatDead() const;
+	void RemoveCat(const Position& position);
+	int FindCatInCatsList(const Position& position);
+
 
 private:
 	bool CheckBorders(const std::vector<Position>& positions) const;
 	bool CheckOverlap(const std::vector<Position>& positions) const;
-
-
+	bool ArePositionsValid(const std::vector<Position>& positions);
+	void RemoveCatFromCatList(const Position& position);
+	void AddCat(std::vector<Position> positions);
+	void UpdateBoard(std::vector<Position> positions);
 
 private:
 	std::array<std::array<ETileType, BOARD_SIZE>, BOARD_SIZE> m_board;
