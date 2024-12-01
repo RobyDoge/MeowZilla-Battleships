@@ -9,8 +9,8 @@ class EnemyBoard;
 
 class UIObserver : public IBoardObserver {
 private:
-    bool m_boardUpdated = false;
-
+    
+    EPlayer currentPlayer =EPlayer::HumanPlayer;
 public:
 
     PlayerBoard* m_playerBoard = nullptr;
@@ -39,17 +39,22 @@ public:
         if (player == EPlayer::ComputerPlayer)
         {
             m_enemyBoard->setBoardIsActive(true);
-        }
-        else
-            m_enemyBoard->setBoardIsActive(false);
-         /*   m_playerBoard->setEnabled(true);
+            currentPlayer = EPlayer::ComputerPlayer;
         }
         else if (player == EPlayer::HumanPlayer)
         {
-            m_enemyBoard->setEnabled(true);
-            m_playerBoard->setEnabled(false);
-        }*/
+
+            m_enemyBoard->setBoardIsActive(false);
+            currentPlayer = EPlayer::HumanPlayer;
+        }
+        else currentPlayer = EPlayer::None;
     }
+
+    EPlayer GetCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
 
 };
 

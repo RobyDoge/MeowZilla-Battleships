@@ -46,9 +46,6 @@
     <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIBoard.cpp">
       <Filter>Source Files\Boards</Filter>
     </ClCompile>
@@ -59,6 +56,12 @@
       <Filter>Source Files\Boards</Filter>
     </ClCompile>
     <ClCompile Include="UIObserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EndGameWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,6 +87,9 @@
     <QtMoc Include="PlayerBoard.h">
       <Filter>Header Files\Boards</Filter>
     </QtMoc>
+    <QtMoc Include="EndGameWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SetupWindow.ui">
@@ -93,6 +99,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="GameWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EndGameWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

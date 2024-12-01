@@ -65,12 +65,22 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>../Backend</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>../Backend;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>../$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../$(Platform)/$(Configuration);../$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Backend.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../Backend;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Backend.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>;../$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -102,15 +112,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="EndGameWindow.cpp" />
+    <ClCompile Include="UIBoard.cpp" />
     <ClCompile Include="EnemyBoard.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="PlayerBoard.cpp" />
     <ClCompile Include="SetupWindow.cpp" />
     <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="UIObserver.cpp" />
     <QtRcc Include="Resource.qrc" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="EndGameWindow.ui" />
     <QtUic Include="GameWindow.ui" />
     <QtUic Include="MainWindow.ui" />
     <QtUic Include="SetupWindow.ui" />
@@ -119,7 +132,7 @@
     <QtMoc Include="SetupWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Board.h" />
+    <QtMoc Include="UIBoard.h" />
     <QtMoc Include="MainWindow.h" />
     <QtMoc Include="Ship.h" />
   </ItemGroup>
@@ -130,7 +143,11 @@
     <QtMoc Include="EnemyBoard.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlayerBoard.h" />
+    <QtMoc Include="PlayerBoard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="EndGameWindow.h" />
+    <ClInclude Include="UIObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

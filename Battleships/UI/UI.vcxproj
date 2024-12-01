@@ -112,6 +112,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndGameWindow.cpp" />
     <ClCompile Include="UIBoard.cpp" />
     <ClCompile Include="EnemyBoard.cpp" />
     <ClCompile Include="GameWindow.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="UIObserver.cpp" />
     <QtRcc Include="Resource.qrc" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="EndGameWindow.ui" />
     <QtUic Include="GameWindow.ui" />
     <QtUic Include="MainWindow.ui" />
     <QtUic Include="SetupWindow.ui" />
@@ -144,6 +146,7 @@
     <QtMoc Include="PlayerBoard.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="EndGameWindow.h" />
     <ClInclude Include="UIObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
