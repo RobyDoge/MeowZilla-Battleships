@@ -16,9 +16,9 @@ void EnemyBoard::mousePressEvent(QMouseEvent* event)
     int cellSize = 70;
     int row = static_cast<int>(clickPos.y() / cellSize);
     int col = static_cast<int>(clickPos.x() / cellSize);
-    m_game->AttackAtPosition(Position(row, col), EPlayer::ComputerPlayer);
+    m_game->AttackAtPosition(Position(row, col), EPlayer::HumanPlayer);
     
-    setCellVisible(row, col, true);
+    setCellVisible(col, row, true);
 
    
 }

@@ -11,7 +11,7 @@ SetupWindow::SetupWindow(IGamePtr game,QWidget* parent) : QWidget(parent) {
     game->SetBoardObserver(uiObserver);
     board = new PlayerBoard(this);
     board->m_game = game;
-    board->setObserver(uiObserver);
+    uiObserver->m_playerBoard = board;
     // Layout principal
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru

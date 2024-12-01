@@ -56,6 +56,36 @@ void PlayerBoard::setShips(std::vector<Ship*> ships)
     }
 }
 
+std::array<std::list<Position>, TOTAL_CATS> PlayerBoard::getCatPositions()
+{
+    std::array<std::list<Position>, TOTAL_CATS> catPositions;
+
+    for (size_t i = 0; i < ships.size(); ++i) {
+        Ship* ship = ships[i];
+        std::list<Position> positions;
+
+        int startX = static_cast<int>(ship->pos().x()) / cellSize;
+        int startY = static_cast<int>(ship->pos().y()) / cellSize;
+
+        if (ship->isHorizontal()) {
+            for (int j = 0; j < ship->getSize(); ++j) {
+                positions.emplace_back(Position(startY, startX + j));
+            }
+        }
+        else {
+            for (int j = 0; j < ship->getSize(); ++j) {
+                positions.emplace_back(Position(startY + j, startX));
+            }
+        }
+
+        catPositions[i] = positions;
+    }
+
+    return catPositions;
+}
+
+
+
 void PlayerBoard::snapToGrid(Ship* ship) {
 
     int x = static_cast<int>(ship->pos().x())/70*70;
@@ -75,15 +105,16 @@ void PlayerBoard::snapToGrid(Ship* ship) {
     int lastY = static_cast<int>(ship->getLastPos().y()) / 70;
 
     m_game->PlaceCatForPlayer({lastY, lastX}, Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
-    //m_game->PlaceCatForPlayer(Position  ,Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
 
-    if (uiObserver && uiObserver->WasBoardUpdated())
+    if (catCanBePlaced)
     {
-        ship->setPos( x,y);
-        uiObserver->ResetBoardUpdated();
+        ship->setPos(x, y);
+        catCanBePlaced = false;
+
     }
     else
     {
         ship->setPos(ship->getLastPos().x(), ship->getLastPos().y());
     }
 }
+

@@ -9,6 +9,8 @@ GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
     setWindowTitle("Setup Ships");
     showMaximized(); // Sau folosim fullscreen
     m_game = game;
+    std::shared_ptr<UIObserver> observer;
+    observer = dynamic_pointer_cast<UIObserver>(m_game->GetBoardObserver());
     // Layout principal
     QVBoxLayout* layout = new QVBoxLayout(this);
     //layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
@@ -23,15 +25,18 @@ GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
     //QSize size = screen->size();
 
     // Creează board-ul (tabla ta)
-    PlayerBoard* board = new PlayerBoard(this);
-    board->setFixedSize(720, 720);
-    board->setShips(ships);
-    splitter->addWidget(board);
+    playerBoard = new PlayerBoard(this);
+    playerBoard->setFixedSize(720, 720);
+    playerBoard->setShips(ships);
+    splitter->addWidget(playerBoard);
 
     // Setează splitter-ul ca widget principal
     splitter->setSizes({ 1, 1 }); // Fiecare widget să ocupe 50% inițial
     layout->addWidget(splitter);
+    observer->m_playerBoard = playerBoard;
+    observer->m_enemyBoard = enemyBoard;
     
+    playerBoard->initializeBoard(playerBoard->getCatPositions());
     m_game->RunGame();
 
 }
@@ -47,17 +52,6 @@ void GameWindow::RunGame()
 {
     while (true)
     {
-        //Position target;
 
-        //if (m_game-> == EPlayer::HumanPlayer)
-        //{
-        //    // the player will choose a position in the UI
-        //}
-        //else
-        //{
-        //    target = m_computer->GenerateTarget();
-        //}
-
-        //AttackAtPosition(target, m_currentPlayer);
     }
 }

@@ -7,11 +7,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <vector>
-
-struct UIPosition {
-    int row;
-    int col;
-};
+#include "SPosition.h"
 
 class UIBoard : public QGraphicsView {
     Q_OBJECT
@@ -32,7 +28,7 @@ public:
     virtual ~UIBoard();
 
     // Inițializează tabla
-    virtual void initializeBoard(std::array<std::list<UIPosition>, 5> catPositions);
+    virtual void initializeBoard(std::array<std::list<Position>, 5> cats);
 
     // Desenează fundalul
     virtual void drawBackground(QPainter* painter, const QRectF& rect) override;

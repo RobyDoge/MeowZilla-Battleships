@@ -6,7 +6,6 @@
 #include "UIBoard.h"
 #include <QImage>
 #include <IGame.h>
-#include "UIObserver.h"
 
 class PlayerBoard: public UIBoard {
     Q_OBJECT
@@ -20,14 +19,18 @@ public:
 
     void setCatsAreMovable(bool value) { catsAreMovable = value; }
     IGamePtr m_game;
-    void setObserver (std::shared_ptr<UIObserver> observer) { uiObserver = observer; }
+    void setPlayerCellVisible(int row, int col, bool visible) { setCellVisible(col, row, visible); }
+
+    void setCatCanBePlaced(bool value) { catCanBePlaced = value; }
+
+    std::array<std::list<Position>, TOTAL_CATS> getCatPositions();
 protected:
     void snapToGrid(Ship* ship);
 private:
     bool catsAreMovable = true;
+    bool catCanBePlaced = false;
     int rows = 10;
     int cols = 10;
-    std::shared_ptr<UIObserver> uiObserver;
     QImage backGroundPixmap;
     QImage cellPixmap;
     std::vector<Ship*> ships;

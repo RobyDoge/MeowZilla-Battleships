@@ -1,28 +1,43 @@
 ﻿#pragma once
 #include "IBoardObserver.h"
+#include "UIBoard.h"
+#include "EnemyBoard.h"
+#include "PlayerBoard.h"
 
+class PlayerBoard;
+class EnemyBoard;
 
 class UIObserver : public IBoardObserver {
 private:
     bool m_boardUpdated = false;
 
 public:
-    void OnBoardUpdated() override {
-        m_boardUpdated = true; // Notificare primită
+
+    PlayerBoard* m_playerBoard = nullptr;
+    EnemyBoard* m_enemyBoard = nullptr;
+
+public:
+    void OnBoardUpdated() override {    
+        m_playerBoard->setCatCanBePlaced(true);
     }
 
     void OnEnemyBoardUpdated(std::array<std::list<Position>, TOTAL_CATS> cats) override
     {
-	    // nu e treaba mea :( 
+	    m_enemyBoard->initializeBoard(cats);
     }
 
     void OnEnemyAttack(Position position, bool hit) override
     {
-	    // nu e treaba mea :( 
+        if (hit)
+		m_playerBoard->setPlayerCellVisible(position.x, position.y, true);
+        else 
+		m_playerBoard->setPlayerCellVisible(position.x, position.y, true);
     }
 
-    bool WasBoardUpdated() const { return m_boardUpdated; }
+    void OnTurnChange(EPlayer player) override
+    {
+        //meowmoew
+    }
 
-    void ResetBoardUpdated() { m_boardUpdated = false; } 
 };
 

@@ -44,7 +44,7 @@ void BattleshipsGame::PlaceCatForPlayer(Position lastPosition, Position position
 	}
 	if (m_player->GetBoard()->TryPlaceCat(position, size, orientation))
 	{
-		NotifyObserver();
+		NotifyObserver(  );
 	}
 }
 
@@ -106,7 +106,7 @@ void BattleshipsGame::AttackAtPosition(Position position, EPlayer currentPlayer)
 			}
 		}
 	}
-	NotifyObserver();
+	//NotifyObserver();
 }
 
 void BattleshipsGame::ChangeTurn(EPlayer currentPlayer)

@@ -2,7 +2,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
-
 UIBoard::UIBoard(QWidget* parent)
     : QGraphicsView(parent), cellSize(70), gridVisible(false) {
     scene = new QGraphicsScene(this);
@@ -20,7 +19,7 @@ UIBoard::UIBoard(QWidget* parent)
 
 UIBoard::~UIBoard() {}
 
-void UIBoard::initializeBoard(std::array<std::list<UIPosition>, 5> catPositions) {
+void UIBoard::initializeBoard(std::array<std::list<Position>, 5> catPositions) {
     cells.resize(10, std::vector<QGraphicsPixmapItem*>(10, nullptr));
 
 
@@ -28,23 +27,26 @@ void UIBoard::initializeBoard(std::array<std::list<UIPosition>, 5> catPositions)
 		for (const auto& position : wholeCat) {
             QPixmap resizedPixmap = hitPixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
             QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(resizedPixmap);
-            pixmapItem->setPos(position.col * cellSize, position.row * cellSize);
+            pixmapItem->setPos(position.y * cellSize, position.x * cellSize);
             scene->addItem(pixmapItem);
             pixmapItem->setVisible(false);
-            cells[position.row][position.col] = pixmapItem;
+            cells[position.y][position.x] = pixmapItem;
 		}
 	}
 
 
+    // Completează grila cu celule pentru spații goale
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; ++j) {
-            if (cells[i][j] == nullptr) {
+            if (cells[j][i] == nullptr) { // Verificăm invers pentru consistență cu primul `for`
                 QPixmap resizedPixmap = missPixmap.scaled(cellSize, cellSize, Qt::IgnoreAspectRatio);
                 QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(resizedPixmap);
-                pixmapItem->setPos(j * cellSize, i * cellSize);
+
+                // Plasăm celulele goale
+                pixmapItem->setPos(j * cellSize, i * cellSize); // Coordonatele inversate
                 scene->addItem(pixmapItem);
                 pixmapItem->setVisible(false);
-                cells[i][j] = pixmapItem;
+                cells[j][i] = pixmapItem; // Actualizăm în matrice
             }
         }
     }
@@ -65,11 +67,6 @@ void UIBoard::drawBackground(QPainter* painter, const QRectF& rect) {
             painter->drawImage(cellRect, cellPixmap);  // Desenează asset-ul celulei la fiecare poziție
         }
     }
-    std::array<std::list<UIPosition>, 5> catPositions;
-    for (int i = 0; i < 5; i++) {
-        catPositions[i] = { { { 0, i }, { 1, i }, { 2, i }, { 3, i }, { 4, i } } };
-    }
-    initializeBoard(catPositions);
 }
 
 void UIBoard::updateCell(int row, int col, const QPixmap& pixmap) {

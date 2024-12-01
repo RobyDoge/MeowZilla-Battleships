@@ -4,8 +4,11 @@
 #include "ui_GameWindow.h"
 #include "UIBoard.h"
 #include "EnemyBoard.h"
+#include "PlayerBoard.h"
 #include "Ship.h"
 #include "IGame.h"
+#include "UIObserver.h"
+
 
 class GameWindow : public QWidget
 {
@@ -20,5 +23,6 @@ public:
 private:
 	Ui::GameWindowClass ui;
 	EnemyBoard* enemyBoard;
+	PlayerBoard* playerBoard;
 	IGamePtr m_game;
 };
