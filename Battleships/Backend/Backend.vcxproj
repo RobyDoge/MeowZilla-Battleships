@@ -149,6 +149,7 @@
     <ClInclude Include="IBoardObserver.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SPosition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

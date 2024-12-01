@@ -70,5 +70,8 @@
     <ClInclude Include="IBoardObserver.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="SPosition.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
