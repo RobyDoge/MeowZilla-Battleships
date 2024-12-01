@@ -58,6 +58,7 @@ void BattleshipsGame::RunGame()
 
 		while(m_player->GetBoard()->GetRemainingCats() > 0 && m_computer->GetBoard()->GetRemainingCats() > 0)
 		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			Position target;
 			if (m_currentPlayer == EPlayer::ComputerPlayer)
 			{

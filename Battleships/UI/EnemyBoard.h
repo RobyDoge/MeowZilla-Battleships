@@ -12,12 +12,13 @@ class EnemyBoard : public UIBoard {
 
 public:
     EnemyBoard(IGamePtr game, QWidget* parent = nullptr);
-
+    void setBoardIsActive(bool value);
 protected:
     void mousePressEvent(QMouseEvent* event) override;
 private:
     std::vector<std::vector<QGraphicsPixmapItem*>> cells;
     QGraphicsScene* scene;
+    bool boardIsActive = true;
     QImage backGroundPixmap;
     QPixmap cellPixmap;     // Imaginea de bază a celulei
     QPixmap hitPixmap;      // Imaginea pentru celulă lovită

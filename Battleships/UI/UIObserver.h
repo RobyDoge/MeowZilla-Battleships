@@ -36,7 +36,19 @@ public:
 
     void OnTurnChange(EPlayer player) override
     {
-        //meowmoew
+        if (player == EPlayer::ComputerPlayer)
+        {
+            m_enemyBoard->setBoardIsActive(true);
+        }
+        else
+            m_enemyBoard->setBoardIsActive(false);
+         /*   m_playerBoard->setEnabled(true);
+        }
+        else if (player == EPlayer::HumanPlayer)
+        {
+            m_enemyBoard->setEnabled(true);
+            m_playerBoard->setEnabled(false);
+        }*/
     }
 
 };
