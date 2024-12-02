@@ -46,8 +46,6 @@ void Ship::rotate() {
         setRect(0, 0, 70, size * 70); // Vertical
         scaledPixmap = shipPixmap.scaled(70,size * 70, Qt::IgnoreAspectRatio);
         setBrush(QBrush(scaledPixmap));
-
-
     }
 }
 

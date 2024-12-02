@@ -120,7 +120,6 @@ void Board::UpdateBoard(std::vector<Position> positions)
 	{
 		m_board[position.x][position.y] = ETileType::Taken;
 	}
-
 }
 
 void Board::AddCat(std::vector<Position> positions)
@@ -138,9 +137,9 @@ void Board::AddCat(std::vector<Position> positions)
 	}
 }
 
-bool Board::TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
+bool Board::TryPlaceCat(const Position position, ECatSize size, ECatOrientation orientation)
 {
-	std::vector<Position> catPositions = CalculateCatPositions(position, type, orientation);
+	std::vector<Position> catPositions = CalculateCatPositions(position, size, orientation);
 	if (ArePositionsValid(catPositions))
 	{
 		UpdateBoard(catPositions);
@@ -224,10 +223,10 @@ bool Board::CheckOverlap(const std::vector<Position>& positions) const
 }
 
 
-std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSize type,
+std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSize size,
 	ECatOrientation orientation)
 {
-	int typeLength = static_cast<int>(type);
+	int typeLength = static_cast<int>(size);
 	std::vector<Position> positions;
 
 	if (orientation == ECatOrientation::Horizontal)

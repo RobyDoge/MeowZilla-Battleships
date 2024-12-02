@@ -24,7 +24,7 @@ public:
 	ETileType GetTileTypeAtPosition(const Position& position) const;
 
 public:
-	bool TryPlaceCat(const Position position, ECatSize type, ECatOrientation orientation);
+	bool TryPlaceCat(const Position position, ECatSize size, ECatOrientation orientation);
 	bool CheckHit(const Position& position);
 	void SetCatDead(bool isDead);
 	bool IsCatDead() const;
@@ -48,7 +48,7 @@ private:
 
 private:
 	void RemovePieceFromCatList(const Position& position);
-	std::vector<Position> CalculateCatPositions(Position headPosition, ECatSize type, ECatOrientation orientation);
+	std::vector<Position> CalculateCatPositions(Position headPosition, ECatSize size, ECatOrientation orientation);
 };
 
 using BoardPtr = std::shared_ptr<Board>;

@@ -18,6 +18,5 @@ void MainWindow::OpenSetupWindow()
 	m_setUpWindow = new SetupWindow(game);
 	m_setUpWindow->show();
 	this->destroy();
-
 }
 

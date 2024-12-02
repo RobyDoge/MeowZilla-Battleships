@@ -48,21 +48,26 @@ int main() // FOR TESTING THE GAME IN THE CONSOLE
     game->GetComputer()->GenerateCats();
     auto computerBoard = game->GetComputer()->GetBoard();
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
+    for (int i = 0; i < 10; i++) 
+    {
+        for (int j = 0; j < 10; j++) 
+        {
             PrintColoredCell((int)computerBoard->GetBoard()[i][j]);
         }
         std::cout << std::endl;
     }
 
-    while (true) {
+    while (true) 
+    {
         Position target;
 
-        if (game->GetCurrentPlayer() == EPlayer::HumanPlayer) {
+        if (game->GetCurrentPlayer() == EPlayer::HumanPlayer) 
+        {
             std::cout << "Enter position: ";
             std::cin >> target.x >> target.y;
         }
-        else {
+        else
+        {
             target = game->GetComputer()->GenerateTarget();
         }
 
@@ -70,19 +75,22 @@ int main() // FOR TESTING THE GAME IN THE CONSOLE
 		std::cout << "Current turn: " << (int)game->GetCurrentPlayer() << "\n";
 
 		std::cout << "Computer board:            Player board: \n";
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < 10; i++) 
+        {
+			for (int j = 0; j < 10; j++) 
+            {
 				PrintColoredCell((int)computerBoard->GetBoard()[i][j]);
 			}
 			std::cout << "   |   ";
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 10; j++) 
+            {
 				PrintColoredCell((int)playerBoard->GetBoard()[i][j]);
 			}
 			std::cout << std::endl;
 		}
 
-		if (playerBoard->GetRemainingCats() == 0 ||
-			computerBoard->GetRemainingCats() == 0) {
+		if (playerBoard->GetRemainingCats() == 0 || computerBoard->GetRemainingCats() == 0) 
+        {
 			break;
 		}
     }

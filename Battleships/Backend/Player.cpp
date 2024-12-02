@@ -5,12 +5,12 @@ Player::Player()
 	m_board = std::make_shared<Board>();
 }
 
-std::shared_ptr<Board> Player::GetBoard() const
+BoardPtr Player::GetBoard() const
 {
 	return m_board;
 }
 
-bool Player::PlaceCat(const Position position, ECatSize type, ECatOrientation orientation)
+bool Player::PlaceCat(const Position position, ECatSize size, ECatOrientation orientation)
 {
-	return m_board->TryPlaceCat(position, type, orientation);
+	return m_board->TryPlaceCat(position, size, orientation);
 }

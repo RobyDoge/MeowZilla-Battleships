@@ -123,7 +123,6 @@ void BattleshipsGame::NotifyObserver()
 	{
 		m_boardObserver->OnBoardUpdated();
 	}
-
 }
 
 void BattleshipsGame::NotifyComputerObserver(std::array<std::list<Position>, TOTAL_CATS> cats)

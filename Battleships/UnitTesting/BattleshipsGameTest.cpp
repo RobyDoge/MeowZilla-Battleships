@@ -17,12 +17,12 @@ namespace BattleshipsGameTest
 		auto player = game.GetPlayer();
 		auto cat1Head = Position{ 1,1 };
 		std::vector<Position> cat1Positions = { {1,1},{1,2},{ 1,3 },{1,4},{1,5} };
-		auto cat1Type = ECatSize::Large;
+		auto cat1Size = ECatSize::Large;
 		auto cat1Orientation = ECatOrientation::Horizontal;
 		auto lastPosition = Position{ -1,-1 };
 
 
-		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Type, cat1Orientation);
+		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Size, cat1Orientation);
 
 		
 		auto playerCat = player->GetBoard()->GetCats()[0];
@@ -41,14 +41,14 @@ namespace BattleshipsGameTest
 		auto cat1Head = Position{ 1,1 };
 		auto cat2Head = Position{ 1,2 };
 		std::vector<Position> cat2Positions = { {1,2},{2,2},{3,2},{4,2},{5,2} };
-		auto cat1Type = ECatSize::Large;
-		auto cat2Type = ECatSize::Large;
+		auto cat1Size = ECatSize::Large;
+		auto cat2Size = ECatSize::Large;
 		auto cat1Orientation = ECatOrientation::Horizontal;
 		auto cat2Orientation = ECatOrientation::Vertical;
 		auto lastPosition = Position{ -1,-1 };
 
-		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Type, cat1Orientation);
-		game.PlaceCatForPlayer(cat1Head, cat2Head, cat2Type, cat2Orientation);
+		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Size, cat1Orientation);
+		game.PlaceCatForPlayer(cat1Head, cat2Head, cat2Size, cat2Orientation);
 		auto playerCat = player->GetBoard()->GetCats()[0];
 
 		for (const auto& catPosition : playerCat)

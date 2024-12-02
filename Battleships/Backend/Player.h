@@ -7,10 +7,10 @@ public:
 	Player();
 
 public:
-	std::shared_ptr<Board> GetBoard() const;
+	BoardPtr GetBoard() const;
 
 public:
-	bool PlaceCat(const Position position, ECatSize type, ECatOrientation orientation);
+	bool PlaceCat(const Position position, ECatSize size, ECatOrientation orientation);
 
 private:
 	BoardPtr m_board;

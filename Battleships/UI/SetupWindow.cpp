@@ -28,7 +28,6 @@ SetupWindow::SetupWindow(IGamePtr game,QWidget* parent) : QWidget(parent) {
 
 void SetupWindow::SetGame(IGamePtr game)
 {
-   
 
 }
 
