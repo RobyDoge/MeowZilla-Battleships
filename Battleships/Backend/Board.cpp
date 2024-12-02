@@ -64,10 +64,10 @@ int Board::FindCatInCatsList(const Position& position)
 
 bool Board::IsAnotherCatAround(const Position& position)
 {
-	return	(m_board[position.x - 1][position.y] == ETileType::Taken) ||
-			(m_board[position.x + 1][position.y] == ETileType::Taken) ||
-			(m_board[position.x][position.y - 1] == ETileType::Taken) ||
-			(m_board[position.x][position.y + 1] == ETileType::Taken);
+	return	(position.x - 1 >= 0 && m_board[position.x - 1][position.y] == ETileType::Taken) ||
+			(position.x + 1 < BOARD_SIZE && m_board[position.x + 1][position.y] == ETileType::Taken) ||
+			(position.y - 1 >= 0 && m_board[position.x][position.y - 1] == ETileType::Taken) ||
+			(position.y + 1 < BOARD_SIZE && m_board[position.x][position.y + 1] == ETileType::Taken);
 }
 
 void Board::RemoveCat(const Position& position)
@@ -79,19 +79,18 @@ void Board::RemoveCat(const Position& position)
 		{
 			m_board[catPosition.x][catPosition.y] = ETileType::Empty;
 
-			if (catPosition.x + 1 < BOARD_SIZE) {
+			if (catPosition.x + 1 < BOARD_SIZE && !IsAnotherCatAround(Position(catPosition.x + 1, catPosition.y))) {
 				m_board[catPosition.x + 1][catPosition.y] = ETileType::Empty;
 			}
-			if (catPosition.x - 1 >= 0) {
+			if (catPosition.x - 1 >= 0 && !IsAnotherCatAround(Position(catPosition.x - 1, catPosition.y))) {
 				m_board[catPosition.x - 1][catPosition.y] = ETileType::Empty;
 			}
-			if (catPosition.y + 1 < BOARD_SIZE) {
+			if (catPosition.y + 1 < BOARD_SIZE && !IsAnotherCatAround(Position(catPosition.x, catPosition.y + 1))) {
 				m_board[catPosition.x][catPosition.y + 1] = ETileType::Empty;
 			}
-			if (catPosition.y - 1 >= 0) {
+			if (catPosition.y - 1 >= 0 && !IsAnotherCatAround(Position(catPosition.x, catPosition.y - 1))) {
 				m_board[catPosition.x][catPosition.y - 1] = ETileType::Empty;
 			}
-				
 		}
 		m_cats[catIndex].clear();
 	}
