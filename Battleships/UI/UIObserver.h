@@ -8,21 +8,25 @@ class PlayerBoard;
 class EnemyBoard;
 
 class UIObserver : public IBoardObserver {
+public:
+	void OnBoardUpdated() override;
+	void OnEnemyBoardUpdated(std::array<std::list<Position>, TOTAL_CATS> cats) override;
+	void OnEnemyAttack(Position position, bool hit) override;
+	void OnTurnChange(EPlayer player) override;
+
+	EPlayer GetCurrentPlayer();
+public:
+	void setPlayerBoard(PlayerBoard* playerBoard);
+	void setEnemyBoard(EnemyBoard* enemyBoard);
+
+	PlayerBoard* getPlayerBoard();
+	EnemyBoard* getEnemyBoard();
+
 private:
-    
-    EPlayer currentPlayer =EPlayer::HumanPlayer;
-public:
 
-    PlayerBoard* m_playerBoard = nullptr;
-    EnemyBoard* m_enemyBoard = nullptr;
-
-public:
-    void OnBoardUpdated() override;
-    void OnEnemyBoardUpdated(std::array<std::list<Position>, TOTAL_CATS> cats) override;
-    void OnEnemyAttack(Position position, bool hit) override;
-    void OnTurnChange(EPlayer player) override;
-
-    EPlayer GetCurrentPlayer();
+	EPlayer currentPlayer = EPlayer::HumanPlayer;
+	PlayerBoard* m_playerBoard = nullptr;
+	EnemyBoard* m_enemyBoard = nullptr;
 };
 
 

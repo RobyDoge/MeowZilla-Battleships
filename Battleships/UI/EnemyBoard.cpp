@@ -3,31 +3,25 @@
 #include <QPainter>
 
 EnemyBoard::EnemyBoard(IGamePtr game, QWidget* parent)
-    : m_game(game), UIBoard(parent) ,cellSize(70) {
+    : m_game(game), UIBoard(parent) {
 }
 
 void EnemyBoard::setBoardIsActive(bool value)
 {
-    boardIsActive = value;
+    m_boardIsActive = value;
 }
-
 
 void EnemyBoard::mousePressEvent(QMouseEvent* event)
 {
-    // Detectează poziția clicului
     QPointF clickPos = mapToScene(event->pos());
 
-    // Calculează indexul celulei
-    int cellSize = 70;
-    int row = static_cast<int>(clickPos.y() / cellSize);
-    int col = static_cast<int>(clickPos.x() / cellSize);
-    if (boardIsActive)
+    int row = static_cast<int>(clickPos.y() / UIConstants::CELL_SIZE);
+    int col = static_cast<int>(clickPos.x() / UIConstants::CELL_SIZE);
+    if (m_boardIsActive)
     {
         m_game->AttackAtPosition(Position(row, col), EPlayer::HumanPlayer);
     
         setCellVisible(col, row, true);
-
     }
-
    
 }

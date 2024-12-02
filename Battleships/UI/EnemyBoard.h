@@ -16,13 +16,13 @@ public:
 protected:
     void mousePressEvent(QMouseEvent* event) override;
 private:
-    std::vector<std::vector<QGraphicsPixmapItem*>> cells;
-    QGraphicsScene* scene;
-    bool boardIsActive = true;
-    QImage backGroundPixmap;
-    QPixmap cellPixmap;     // Imaginea de bază a celulei
-    QPixmap hitPixmap;      // Imaginea pentru celulă lovită
-    int cellSize = 70;          // Dimensiunea celulei
+
+    std::vector<std::vector<QGraphicsPixmapItem*>> m_cells;
+    QGraphicsScene* m_scene;
+    bool m_boardIsActive = true;
+    QImage m_backGroundImage;
+    QPixmap m_cellPixmap;    
+    QPixmap m_hitPixmap;      
     IGamePtr m_game;
 };
 

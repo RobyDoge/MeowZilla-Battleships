@@ -10,29 +10,33 @@
 class PlayerBoard: public UIBoard {
     Q_OBJECT
 public:
-
     explicit PlayerBoard(QWidget* parent = nullptr);
-    bool addShip(Ship* ship, int x, int y, bool rotated);
-
-    void setShips(std::vector<Ship*> ships);
-    std::vector<Ship*> getShips() { return ships; }
-
-    void setCatsAreMovable(bool value) { catsAreMovable = value; }
-    IGamePtr m_game;
-    void setPlayerCellVisible(int row, int col, bool visible) { setCellVisible(col, row, visible); }
-
-    void setCatCanBePlaced(bool value) { catCanBePlaced = value; }
-
+public: 
+    void setShips(std::vector<Ship*> m_ships);
+    void setCatsAreMovable(bool value);
+    void setPlayerCellVisible(int row, int col, bool visible);
+    void setCatCanBePlaced(bool value);
+    void setGame(IGamePtr game);
+public:
+    std::vector<Ship*> getShips();
     std::array<std::list<Position>, TOTAL_CATS> getCatPositions();
+    IGamePtr getGame();
+
 protected:
     void snapToGrid(Ship* ship);
+
 private:
-    bool catsAreMovable = true;
-    bool catCanBePlaced = false;
+    void initializeShips();
+
+private:
+
+    bool m_catsAreMovable = true;
+    bool m_catCanBePlaced = false;
     int rows = 10;
     int cols = 10;
-    QImage backGroundPixmap;
-    QImage cellPixmap;
-    std::vector<Ship*> ships;
+    IGamePtr m_game;
+    QImage m_backGroundImage;
+    QImage m_cellPixmap;
+    std::vector<Ship*> m_ships;
 };
 

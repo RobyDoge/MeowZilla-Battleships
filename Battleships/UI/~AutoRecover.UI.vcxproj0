@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="EndGameWindow.h" />
+    <ClInclude Include="UIConstants.h" />
     <ClInclude Include="UIObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

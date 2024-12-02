@@ -8,43 +8,35 @@
 #include <QPainter>
 #include <vector>
 #include "SPosition.h"
-
+#include "UIConstants.h"
 class UIBoard : public QGraphicsView {
     Q_OBJECT
 
-protected:
-    QGraphicsScene* scene;
-    QImage backGroundImage;   
-    QImage cellPixmap;        
-    QPixmap hitPixmap;
-	QPixmap missPixmap;
-    
-    int cellSize = 70;               
-    bool gridVisible;         
-    std::vector<std::vector<QGraphicsPixmapItem*>> cells; 
-    bool catPlacedSuccessfully = false;
+
 public:
     UIBoard(QWidget* parent = nullptr);
     virtual ~UIBoard();
 
-    // Inițializează tabla
     virtual void initializeBoard(std::array<std::list<Position>, 5> cats);
 
-    // Desenează fundalul
     virtual void drawBackground(QPainter* painter, const QRectF& rect) override;
 
-    // Afișează un anumit asset într-o celulă
-    void updateCell(int row, int col, const QPixmap& pixmap);
-
-    // Setează vizibilitatea unui grid
-    void setGridVisibility(bool visible);
-
-    // Setează vizibilitatea unei celule individuale
     void setCellVisible(int row, int col, bool visible);
 
-    void setCatPlacedSuccessfully(bool value) { catPlacedSuccessfully = value; }
+    void setCatPlacedSuccessfully(bool value);
 
-    bool getCatPlacedSuccessfully() { return catPlacedSuccessfully; }
+    bool getCatPlacedSuccessfully();
+
+protected:
+    QGraphicsScene* m_scene;
+    QImage m_backGroundImage;
+    QImage m_cellImage;
+    QPixmap m_hitPixmap;
+	QPixmap m_missPixmap;
+                  
+    bool m_gridVisible;
+    std::vector<std::vector<QGraphicsPixmapItem*>> m_cells;
+    bool m_catPlacedSuccessfully = false;
 };
 
-#endif // BOARD_H
+#endif 

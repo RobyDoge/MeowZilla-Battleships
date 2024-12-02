@@ -27,6 +27,9 @@
     <Filter Include="Header Files\Boards">
       <UniqueIdentifier>{72f6bd37-55dc-4000-bcfe-f6aac03e78ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{b630c0d6-3faf-40d0-8da4-312af20a9995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Resource.qrc">
@@ -108,6 +111,9 @@
   <ItemGroup>
     <ClInclude Include="UIObserver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIConstants.h">
+      <Filter>Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

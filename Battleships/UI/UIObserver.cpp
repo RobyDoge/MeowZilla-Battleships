@@ -14,7 +14,7 @@ void UIObserver::OnEnemyAttack(Position position, bool hit)
 {
 	if (hit)
 		m_playerBoard->setPlayerCellVisible(position.x, position.y, true);
-	else 
+	else
 		m_playerBoard->setPlayerCellVisible(position.x, position.y, true);
 }
 
@@ -37,4 +37,24 @@ void UIObserver::OnTurnChange(EPlayer player)
 EPlayer UIObserver::GetCurrentPlayer()
 {
 	return currentPlayer;
+}
+
+void UIObserver::setPlayerBoard(PlayerBoard* playerBoard)
+{
+	m_playerBoard = playerBoard;
+}
+
+void UIObserver::setEnemyBoard(EnemyBoard* enemyBoard)
+{
+	m_enemyBoard = enemyBoard;
+}
+
+PlayerBoard* UIObserver::getPlayerBoard()
+{
+	return m_playerBoard;
+}
+
+EnemyBoard* UIObserver::getEnemyBoard()
+{
+	return m_enemyBoard;
 }

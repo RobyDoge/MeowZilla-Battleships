@@ -7,6 +7,7 @@
 #include <QColor>
 #include <qbrush.h>
 #include <QObject>
+#include "UIConstants.h"
 class Ship : public QObject, public QGraphicsRectItem { 
     Q_OBJECT 
 
@@ -28,11 +29,11 @@ signals:
     void shipDropped(Ship* ship);
 
 private:
-    int size;
-    bool horizontal;  // Orientarea navei
-    QPixmap shipPixmap;
-    QPixmap scaledPixmap;
-    QPointF lastPos;  // Poziția inițială pentru anularea mutării, dacă e necesar
+    int m_size;
+    bool m_horizontal; 
+    QPixmap m_shipPixmap;
+    QPixmap m_scaledPixmap;
+    QPointF m_lastPos; 
 };
 
 #endif // SHIP_H

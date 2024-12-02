@@ -18,15 +18,14 @@ public:
 	GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent = nullptr);
 	~GameWindow();
 
-	void SetGame(IGamePtr game);
 	void RunGame();
 	void ShowEndGameWindow();
 private:
 	Ui::GameWindowClass ui;
-	EnemyBoard* enemyBoard;
-	PlayerBoard* playerBoard;
+	EnemyBoard* m_enemyBoard;
+	PlayerBoard* m_playerBoard;
 	IGamePtr m_game;
-	QLabel* currentPlayerLabel;
-	std::shared_ptr<UIObserver> observer;
+	QLabel* m_currentPlayerLabel;
+	std::shared_ptr<UIObserver> m_observer;
 
 };

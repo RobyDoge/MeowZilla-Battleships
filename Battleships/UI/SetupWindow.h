@@ -12,13 +12,13 @@ class SetupWindow : public QWidget {
 
 public:
     explicit SetupWindow(IGamePtr game,QWidget* parent = nullptr);
-    void SetGame(IGamePtr game);
 
 private slots:
     void confirmSetup();
 
 private:
-    PlayerBoard* board;
+    std::shared_ptr<UIObserver> m_observer;
+    PlayerBoard* m_playerBoard;
     QPushButton* confirmButton;
     GameWindow* m_gameWindow;
     IGamePtr m_game;

@@ -3,69 +3,74 @@
 #include <QGraphicsScene>
 PlayerBoard::PlayerBoard(QWidget* parent)
     : UIBoard(parent) {
-    setFixedSize(1400, 750);
-    scene->setSceneRect(0, 0, 700, 700);
+    setFixedSize(UIConstants::SETUPBOARD_WIDTH, UIConstants::SETUPBOARD_HEIGHT);
+    m_scene->setSceneRect(0, 0, UIConstants::BOARD_WIDTH, UIConstants::BOARD_HEIGHT);
 
-    // Încarcă fundalul
-    backGroundPixmap.load(":/Assets/background.jpg");
-
-    // Încarcă asset-ul pentru celule
-    cellPixmap.load(":/Assets/emptyCell.jpg");  // Asumăm că ai un asset numit "cell.jpg" în folderul Assets
+    m_backGroundImage.load(":/Assets/background.jpg");
+    m_cellPixmap.load(":/Assets/emptyCell.jpg");
 
     setRenderHint(QPainter::Antialiasing);
-
-    // Adaugă nave în scenă
-    Ship* ship1 = new Ship(5, Qt::blue);
-    Ship* ship2 = new Ship(5, Qt::blue);
-    Ship* ship3 = new Ship(3, Qt::green);
-    Ship* ship4 = new Ship(3, Qt::green);
-    Ship* ship5 = new Ship(2, Qt::red);
-
-    ships.emplace_back(ship1);
-    ships.emplace_back(ship2);
-    ships.emplace_back(ship3);
-    ships.emplace_back(ship4);
-    ships.emplace_back(ship5);
-
-    scene->addItem(ship1);
-    scene->addItem(ship2);
-    scene->addItem(ship3);
-    scene->addItem(ship4);
-    scene->addItem(ship5);
-
-    // Poziționează navele pe tablă
-    ship1->setPos(-350, 0);
-    ship2->setPos(-350, 70);
-    ship3->setPos(-350, 140);
-    ship4->setPos(-350, 210);
-    ship5->setPos(-350, 280);
-
-    connect(ship1, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
-    connect(ship2, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
-    connect(ship3, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
-    connect(ship4, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
-    connect(ship5, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
+    initializeShips();
 }
+void PlayerBoard::initializeShips() {
+    std::vector<std::pair<int, QColor>> shipData = {
+        {5, Qt::blue}, {5, Qt::blue}, {3, Qt::green}, {3, Qt::green}, {2, Qt::red}
+    };
 
+    int initialYPosition = 0; 
+    for (const auto& [size, color] : shipData) {
+        Ship* ship = new Ship(size, color);
+        ship->setPos(-350, initialYPosition); 
+        initialYPosition += UIConstants::CELL_SIZE;
+
+        m_ships.emplace_back(ship);
+        m_scene->addItem(ship);
+
+        connect(ship, &Ship::shipDropped, this, &PlayerBoard::snapToGrid);
+    }
+}
+void PlayerBoard::setCatsAreMovable(bool value)
+{
+    m_catsAreMovable = value;
+}
+void PlayerBoard::setPlayerCellVisible(int row, int col, bool visible)
+{
+    setCellVisible(col, row, visible);
+}
 void PlayerBoard::setShips(std::vector<Ship*> ships)
 {
     for (int i = 0; i < ships.size(); i++)
     {
-        this->ships[i]->setPos(ships[i]->pos());
-        this->ships[i]->setHorizontal(ships[i]->isHorizontal());
+        this->m_ships[i]->setPos(ships[i]->pos());
+        this->m_ships[i]->setHorizontal(ships[i]->isHorizontal());
     }
+}
+
+std::vector<Ship*> PlayerBoard::getShips()
+{
+    return m_ships;
+}
+
+void PlayerBoard::setCatCanBePlaced(bool value)
+{
+    m_catCanBePlaced = value;
+}
+
+void PlayerBoard::setGame(IGamePtr game)
+{
+    m_game = game;
 }
 
 std::array<std::list<Position>, TOTAL_CATS> PlayerBoard::getCatPositions()
 {
     std::array<std::list<Position>, TOTAL_CATS> catPositions;
 
-    for (size_t i = 0; i < ships.size(); ++i) {
-        Ship* ship = ships[i];
+    for (size_t i = 0; i < m_ships.size(); ++i) {
+        Ship* ship = m_ships[i];
         std::list<Position> positions;
 
-        int startX = static_cast<int>(ship->pos().x()) / cellSize;
-        int startY = static_cast<int>(ship->pos().y()) / cellSize;
+        int startX = static_cast<int>(ship->pos().x()) / UIConstants::CELL_SIZE;
+        int startY = static_cast<int>(ship->pos().y()) / UIConstants::CELL_SIZE;
 
         if (ship->isHorizontal()) {
             for (int j = 0; j < ship->getSize(); ++j) {
@@ -84,37 +89,48 @@ std::array<std::list<Position>, TOTAL_CATS> PlayerBoard::getCatPositions()
     return catPositions;
 }
 
+IGamePtr PlayerBoard::getGame()
+{
+    return m_game;
+}
+
 
 
 void PlayerBoard::snapToGrid(Ship* ship) {
 
-    int x = static_cast<int>(ship->pos().x())/70*70;
-    int y = static_cast<int>(ship->pos().y())/70*70;
-    int horizontal;
+    auto snapToNearestCell = [](int coordinate) {
+        return (coordinate / UIConstants::CELL_SIZE) * UIConstants::CELL_SIZE;
+        };
 
-    if (ship->isHorizontal())
-	{
-		horizontal = 2;
-	}
-	else
-	{
-		horizontal = 1;
-	}
-    // use PlaceCatForPlayer from m_game with last position of ship
-    int lastX = static_cast<int>(ship->getLastPos().x()) / 70;
-    int lastY = static_cast<int>(ship->getLastPos().y()) / 70;
+    int snappedX = snapToNearestCell(static_cast<int>(ship->pos().x()));
+    int snappedY = snapToNearestCell(static_cast<int>(ship->pos().y()));
 
-    m_game->PlaceCatForPlayer({lastY, lastX}, Position(y / 70, x / 70), ECatSize(ship->getSize()), ECatOrientation(horizontal));
+    ECatOrientation orientation = ship->isHorizontal()
+        ? ECatOrientation::Horizontal
+        : ECatOrientation::Vertical;
 
-    if (catCanBePlaced)
-    {
-        ship->setPos(x, y);
-        catCanBePlaced = false;
+    Position lastGridPosition(
+        static_cast<int>(ship->getLastPos().y()) / UIConstants::CELL_SIZE,
+        static_cast<int>(ship->getLastPos().x()) / UIConstants::CELL_SIZE
+    );
 
+    Position newGridPosition(
+        snappedY / UIConstants::CELL_SIZE,
+        snappedX / UIConstants::CELL_SIZE
+    );
+
+    m_game->PlaceCatForPlayer(
+        lastGridPosition,
+        newGridPosition,
+        static_cast<ECatSize>(ship->getSize()),
+        orientation
+    );
+
+    if (m_catCanBePlaced) {
+        ship->setPos(snappedX, snappedY);
+        m_catCanBePlaced = false;
     }
-    else
-    {
-        ship->setPos(ship->getLastPos().x(), ship->getLastPos().y());
+    else {
+        ship->setPos(ship->getLastPos());
     }
 }
-

@@ -4,43 +4,38 @@
 #include <QSplitter>
 #include <QThread>
 GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
-	: QWidget(parent)
+	: m_game(game), QWidget(parent)
 {
 	ui.setupUi(this);
-    setWindowTitle("Setup Ships");
-    showMaximized(); // Sau folosim fullscreen
-    m_game = game;
-    observer = dynamic_pointer_cast<UIObserver>(m_game->GetBoardObserver());
-    // Layout principal
+    setWindowTitle("Battleships(dar cu pisici)");
+    showMaximized(); 
+    m_observer = dynamic_pointer_cast<UIObserver>(m_game->GetBoardObserver());
+    
     QVBoxLayout* layout = new QVBoxLayout(this);
-    //layout->setAlignment(Qt::AlignCenter); // Aliniază tot conținutul la centru
-    currentPlayerLabel = new QLabel("Current Player: Player", this); // Text implicit
-    currentPlayerLabel->setAlignment(Qt::AlignCenter); // Aliniere centrală
-    QFont font = currentPlayerLabel->font();
+    m_currentPlayerLabel = new QLabel("Current Player: Player", this);
+    m_currentPlayerLabel->setAlignment(Qt::AlignCenter);
+    QFont font = m_currentPlayerLabel->font();
     font.setPointSize(16);
     font.setBold(true);
-    currentPlayerLabel->setFont(font);
+    m_currentPlayerLabel->setFont(font);
 
-    layout->addWidget(currentPlayerLabel); // Adaugă QLabel în layout
-    // Creează un splitter orizontal
+    layout->addWidget(m_currentPlayerLabel);
+
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
-    
-    enemyBoard = new EnemyBoard(m_game,this);
-    splitter->addWidget(enemyBoard);
+    m_enemyBoard = new EnemyBoard(m_game,this);
+    splitter->addWidget(m_enemyBoard);
 
-    // Creează board-ul (tabla ta)
-    playerBoard = new PlayerBoard(this);
-    playerBoard->setFixedSize(720, 720);
-    playerBoard->setShips(ships);
-    splitter->addWidget(playerBoard);
+    m_playerBoard = new PlayerBoard(this);
+    m_playerBoard->setFixedSize(UIConstants::GAMEBOARD_WIDTH, UIConstants::GAMEBOARD_HEIGHT);
+    m_playerBoard->setShips(ships);
+    splitter->addWidget(m_playerBoard);
 
-    // Setează splitter-ul ca widget principal
-    splitter->setSizes({ 1, 1 }); // Fiecare widget să ocupe 50% inițial
+    splitter->setSizes({ 1, 1 }); 
     layout->addWidget(splitter);
-    observer->m_playerBoard = playerBoard;
-    observer->m_enemyBoard = enemyBoard;
+    m_observer->setPlayerBoard(m_playerBoard);
+    m_observer->setEnemyBoard(m_enemyBoard);
     
-    playerBoard->initializeBoard(playerBoard->getCatPositions());
+    m_playerBoard->initializeBoard(m_playerBoard->getCatPositions());
     m_game->RunGame();
     RunGame();
 
@@ -49,31 +44,26 @@ GameWindow::GameWindow(std::vector<Ship*> ships, IGamePtr game, QWidget *parent)
 GameWindow::~GameWindow()
 {}
 
-void GameWindow::SetGame(IGamePtr game)
-{
-
-}
-
 void GameWindow::RunGame()
 {
 	std::thread drawThread([this]()
 		{
-			while (observer->GetCurrentPlayer()!=EPlayer::None)
+			while (m_observer->GetCurrentPlayer()!=EPlayer::None)
 			{
-				if (observer->GetCurrentPlayer() == EPlayer::ComputerPlayer)
+				if (m_observer->GetCurrentPlayer() == EPlayer::ComputerPlayer)
 				{
-                    QMetaObject::invokeMethod(currentPlayerLabel, [&]()
+                    QMetaObject::invokeMethod(m_currentPlayerLabel, [&]()
                         {
-                            currentPlayerLabel->setText("Current Player: Player");
+                            m_currentPlayerLabel->setText("Current Player: Player");
                         });
 
 
 				}
-				else if(observer->GetCurrentPlayer() == EPlayer::HumanPlayer) {
+				else if(m_observer->GetCurrentPlayer() == EPlayer::HumanPlayer) {
 
-                    QMetaObject::invokeMethod(currentPlayerLabel, [&]()
+                    QMetaObject::invokeMethod(m_currentPlayerLabel, [&]()
                         {
-                            currentPlayerLabel->setText("Current Player: Computer");
+                            m_currentPlayerLabel->setText("Current Player: Computer");
                         });
 				}
 

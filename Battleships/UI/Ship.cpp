@@ -3,55 +3,55 @@
 #include <QDebug>
 
 Ship::Ship(int size, QColor color, QGraphicsItem* parent)
-    : QGraphicsRectItem(parent), size(size), horizontal(true) {
+    : QGraphicsRectItem(parent), m_size(size), m_horizontal(true) {
 
     switch (size) {
-    case 5: shipPixmap.load(":/Assets/big_sleepy.png"); break;
-    case 3: shipPixmap.load(":/Assets/medium_sleepy.png"); break;
-    case 2: shipPixmap.load(":/Assets/small_sleepy.png"); break;
+    case 5: m_shipPixmap.load(":/Assets/big_sleepy.png"); break;
+    case 3: m_shipPixmap.load(":/Assets/medium_sleepy.png"); break;
+    case 2: m_shipPixmap.load(":/Assets/small_sleepy.png"); break;
     }
-    if (horizontal) {
-        setRect(0, 0, size * 70, 70);
-        scaledPixmap = shipPixmap.scaled(70, size * 70, Qt::IgnoreAspectRatio);
+    if (m_horizontal) {
+        setRect(0, 0, size * UIConstants::CELL_SIZE, UIConstants::CELL_SIZE);
+        m_scaledPixmap = m_shipPixmap.scaled(UIConstants::CELL_SIZE, size * UIConstants::CELL_SIZE, Qt::IgnoreAspectRatio);
         QTransform transform;
         transform.rotate(90);
-        scaledPixmap = scaledPixmap.transformed(transform);
+        m_scaledPixmap = m_scaledPixmap.transformed(transform);
 
     }
     else {
-        setRect(0, 0, 70, size * 70);
-        scaledPixmap = shipPixmap.scaled(size * 70, 70, Qt::IgnoreAspectRatio);
+        setRect(0, 0, UIConstants::CELL_SIZE, size * UIConstants::CELL_SIZE);
+        m_scaledPixmap = m_shipPixmap.scaled(size * UIConstants::CELL_SIZE, UIConstants::CELL_SIZE, Qt::IgnoreAspectRatio);
         QTransform transform;
         transform.rotate(-90);
-        scaledPixmap = scaledPixmap.transformed(transform);
+        m_scaledPixmap = m_scaledPixmap.transformed(transform);
     }
-    setBrush(QBrush(scaledPixmap));
+    setBrush(QBrush(m_scaledPixmap));
     setPen(QPen(Qt::NoPen)); 
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
 void Ship::rotate() {
-    horizontal = !horizontal;
-    if (horizontal) {
-        setRect(0, 0, size * 70, 70); // Orizontal
-        scaledPixmap = shipPixmap.scaled(70, size * 70, Qt::IgnoreAspectRatio);
+    m_horizontal = !m_horizontal;
+    if (m_horizontal) {
+        setRect(0, 0, m_size * UIConstants::CELL_SIZE, UIConstants::CELL_SIZE); 
+        m_scaledPixmap = m_shipPixmap.scaled(UIConstants::CELL_SIZE, m_size * UIConstants::CELL_SIZE, Qt::IgnoreAspectRatio);
         QTransform transform;
         transform.rotate(90);
-        scaledPixmap = scaledPixmap.transformed(transform);
-        setBrush(QBrush(scaledPixmap));
+        m_scaledPixmap = m_scaledPixmap.transformed(transform);
+        setBrush(QBrush(m_scaledPixmap));
 
     }
     else {
-        setRect(0, 0, 70, size * 70); // Vertical
-        scaledPixmap = shipPixmap.scaled(70,size * 70, Qt::IgnoreAspectRatio);
-        setBrush(QBrush(scaledPixmap));
+        setRect(0, 0, UIConstants::CELL_SIZE, m_size * UIConstants::CELL_SIZE); 
+        m_scaledPixmap = m_shipPixmap.scaled(UIConstants::CELL_SIZE, m_size * UIConstants::CELL_SIZE, Qt::IgnoreAspectRatio);
+        setBrush(QBrush(m_scaledPixmap));
     }
 }
 
 void Ship::setHorizontal(bool horizontal)
 {
-    if (this->horizontal != horizontal)
+    if (this->m_horizontal != horizontal)
 	{
 		rotate();
 	}
@@ -59,19 +59,19 @@ void Ship::setHorizontal(bool horizontal)
 
 QPointF Ship::getLastPos()
 {
-    return lastPos;
+    return m_lastPos;
 }
 
 int Ship::getSize() const {
-    return size;
+    return m_size;
 }
 
 bool Ship::isHorizontal() const {
-    return horizontal;
+    return m_horizontal;
 }
 
 void Ship::mousePressEvent(QGraphicsSceneMouseEvent* event) {
-    lastPos = pos(); // Salvează poziția inițială
+    m_lastPos = pos();
     QGraphicsRectItem::mousePressEvent(event);
 }
 
@@ -87,6 +87,6 @@ void Ship::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
 }
 
 void Ship::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
-    rotate();  // Apelează funcția rotate pentru a schimba orientarea navei
-    QGraphicsRectItem::mouseDoubleClickEvent(event);  // Trebuie să apelăm și funcția de bază pentru a asigura comportamentul corect
+    rotate(); 
+    QGraphicsRectItem::mouseDoubleClickEvent(event);  
 }
