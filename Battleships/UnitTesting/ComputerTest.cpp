@@ -186,4 +186,32 @@ namespace ComputerTest
 		EXPECT_FALSE(computer.FoundATarget());
 		EXPECT_FALSE(computer.PreviousAttackSucceeded());
 	}
+
+	TEST(RunGame, ComputerVsComputer)
+	{
+		Computer playerOne; //HumanPlayer
+		Computer playerTwo; //ComputerPlayer
+
+		playerOne.GenerateCats();
+		playerTwo.GenerateCats();
+
+		EPlayer currentPlayer = EPlayer::ComputerPlayer;
+
+		while (playerOne.GetBoard()->GetRemainingCats() > 0 && playerTwo.GetBoard()->GetRemainingCats() > 0)
+		{
+			if (currentPlayer == EPlayer::ComputerPlayer)
+			{
+				Position target = playerTwo.GenerateTarget();
+				if (!playerOne.GetBoard()->CheckHit(target))
+					currentPlayer = EPlayer::HumanPlayer;
+			}
+			else
+			{
+				Position target = playerOne.GenerateTarget();
+				playerTwo.GetBoard()->CheckHit(target);
+				if (!playerTwo.GetBoard()->CheckHit(target))
+					currentPlayer = EPlayer::ComputerPlayer;
+			}
+		}
+	}
 }

@@ -13,7 +13,7 @@ namespace BattleshipsGameTest
 
 	TEST(PlaceCatInGame, OneCat)
 	{
-		MockBattleshipsGame game;
+		BattleshipsGame game;
 		auto player = game.GetPlayer();
 		auto cat1Head = Position{ 1,1 };
 		std::vector<Position> cat1Positions = { {1,1},{1,2},{ 1,3 },{1,4},{1,5} };
@@ -36,7 +36,7 @@ namespace BattleshipsGameTest
 
 	TEST(PlaceCatInGame, MoveCat)
 	{
-		MockBattleshipsGame game;
+		BattleshipsGame game;
 		auto player = game.GetPlayer();
 		auto cat1Head = Position{ 1,1 };
 		auto cat2Head = Position{ 1,2 };
@@ -56,5 +56,57 @@ namespace BattleshipsGameTest
 			auto check = std::ranges::find(cat2Positions, catPosition);
 			EXPECT_TRUE(check != cat2Positions.end());
 		}
+	}
+
+	TEST(ChangeTurn, NoneToComputer)
+	{
+		BattleshipsGame game;
+
+		EXPECT_TRUE(game.GetCurrentPlayer() == EPlayer::None);
+		game.ChangeTurn(EPlayer::HumanPlayer);
+		EXPECT_TRUE(game.GetCurrentPlayer() == EPlayer::ComputerPlayer);
+	}
+
+	TEST(AttackAtPosition, AttackHit)
+	{
+		BattleshipsGame game;
+		auto cat1Head = Position{ 1,1 };
+		auto cat1Size = ECatSize::Large;
+		auto cat1Orientation = ECatOrientation::Horizontal;
+		auto lastPosition = Position{ -1,-1 };
+
+		//changes the turn to the computer
+		game.ChangeTurn(EPlayer::HumanPlayer);
+		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Size, cat1Orientation);
+		game.AttackAtPosition(cat1Head, EPlayer::ComputerPlayer);
+
+		auto player = game.GetPlayer();
+		auto playerBoard = player->GetBoard();
+
+		EXPECT_TRUE(playerBoard->GetTileTypeAtPosition(cat1Head) == ETileType::Hit);
+		EXPECT_TRUE(playerBoard->GetCats()[0].size() == 4);
+		EXPECT_TRUE(playerBoard->GetRemainingCats() == 17);
+		EXPECT_TRUE(game.GetCurrentPlayer() == EPlayer::ComputerPlayer);
+	}
+
+	TEST(AttackAtPosition, AttackMiss)
+	{
+		BattleshipsGame game;
+		auto player = game.GetPlayer();
+		auto playerBoard = player->GetBoard();
+		auto cat1Head = Position{ 1,1 };
+		auto cat1Size = ECatSize::Large;
+		auto cat1Orientation = ECatOrientation::Horizontal;
+		auto lastPosition = Position{ -1,-1 };
+
+		game.PlaceCatForPlayer(lastPosition, cat1Head, cat1Size, cat1Orientation);
+		game.AttackAtPosition(cat1Head, EPlayer::ComputerPlayer);
+		game.AttackAtPosition({ 0,0 }, EPlayer::ComputerPlayer);
+
+		EXPECT_TRUE(playerBoard->GetTileTypeAtPosition({ 0,0 }) == ETileType::Miss);
+		EXPECT_TRUE(playerBoard->GetCats()[0].size() == 4);
+		EXPECT_TRUE(playerBoard->GetRemainingCats() == 17);
+		EXPECT_TRUE(game.GetCurrentPlayer() == EPlayer::HumanPlayer);
+
 	}
 }
