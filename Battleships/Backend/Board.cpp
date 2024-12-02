@@ -46,11 +46,6 @@ ETileType Board::GetTileTypeAtPosition(const Position& position) const
 }
 
 
-void Board::RemoveCatFromCatList(const Position& position)
-{
-	m_cats[FindCatInCatsList(position)].clear();
-}
-
 int Board::FindCatInCatsList(const Position& position)
 {
 	for (int i = 0; i < TOTAL_CATS; i++)
@@ -67,28 +62,39 @@ int Board::FindCatInCatsList(const Position& position)
 	return -1;
 }
 
+bool Board::IsAnotherCatAround(const Position& position)
+{
+	return	(m_board[position.x - 1][position.y] == ETileType::Taken) ||
+			(m_board[position.x + 1][position.y] == ETileType::Taken) ||
+			(m_board[position.x][position.y - 1] == ETileType::Taken) ||
+			(m_board[position.x][position.y + 1] == ETileType::Taken);
+}
+
 void Board::RemoveCat(const Position& position)
 {
-	//int catIndex = FindCatInCatList({ position.y, position.x });
 	int catIndex = FindCatInCatsList(position);
 	if (catIndex != -1)
 	{
 		for (auto& catPosition : m_cats[catIndex])
 		{
-			
 			m_board[catPosition.x][catPosition.y] = ETileType::Empty;
-			if (catPosition.x + 1 < BOARD_SIZE)
+
+			if (catPosition.x + 1 < BOARD_SIZE) {
 				m_board[catPosition.x + 1][catPosition.y] = ETileType::Empty;
-			if (catPosition.x - 1 >= 0)
+			}
+			if (catPosition.x - 1 >= 0) {
 				m_board[catPosition.x - 1][catPosition.y] = ETileType::Empty;
-			if (catPosition.y + 1 < BOARD_SIZE)
+			}
+			if (catPosition.y + 1 < BOARD_SIZE) {
 				m_board[catPosition.x][catPosition.y + 1] = ETileType::Empty;
-			if (catPosition.y - 1 >= 0)
+			}
+			if (catPosition.y - 1 >= 0) {
 				m_board[catPosition.x][catPosition.y - 1] = ETileType::Empty;
+			}
+				
 		}
-		RemoveCatFromCatList(position);
+		m_cats[catIndex].clear();
 	}
-	
 }
 
 bool Board::ArePositionsValid(const std::vector<Position>& positions)
@@ -101,13 +107,13 @@ void Board::UpdateBoard(std::vector<Position> positions)
 	for (auto& position : positions)
 	{
 		if(position.x + 1 < BOARD_SIZE)
-			m_board[position.x + 1][position.y] = ETileType::AreaHit;
+			m_board[position.x + 1][position.y] = ETileType::CatArea;
 		if(position.x - 1 >= 0)
-			m_board[position.x - 1][position.y] = ETileType::AreaHit;
+			m_board[position.x - 1][position.y] = ETileType::CatArea;
 		if(position.y + 1 < BOARD_SIZE)
-			m_board[position.x][position.y + 1] = ETileType::AreaHit;
+			m_board[position.x][position.y + 1] = ETileType::CatArea;
 		if(position.y - 1 >= 0)
-			m_board[position.x][position.y - 1] = ETileType::AreaHit;
+			m_board[position.x][position.y - 1] = ETileType::CatArea;
 	}
 
 	for (auto& position : positions)
@@ -216,7 +222,6 @@ bool Board::CheckOverlap(const std::vector<Position>& positions) const
 	}
 	return true;
 }
-
 
 
 std::vector<Position> Board::CalculateCatPositions(Position headPosition, ECatSize type,

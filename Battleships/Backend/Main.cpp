@@ -34,7 +34,8 @@ void PrintColoredCell(int value) {
     }
 }
 
-int main() {
+int main() // FOR TESTING THE GAME IN THE CONSOLE
+{
     BattleshipsGame* game = new BattleshipsGame();
     auto playerBoard = game->GetPlayer()->GetBoard();
 
@@ -60,8 +61,6 @@ int main() {
         if (game->GetCurrentPlayer() == EPlayer::HumanPlayer) {
             std::cout << "Enter position: ";
             std::cin >> target.x >> target.y;
-            //target.x = 1;
-            //target.y = 1;
         }
         else {
             target = game->GetComputer()->GenerateTarget();

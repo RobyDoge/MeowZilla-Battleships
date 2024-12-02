@@ -38,9 +38,6 @@
     <ClCompile Include="BattleshipsGame.cpp">
       <Filter>GameLogic\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBoardObserver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EPlayer.h">

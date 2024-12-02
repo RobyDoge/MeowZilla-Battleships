@@ -12,6 +12,7 @@ Computer::	Computer()
 Computer::Computer(BoardPtr board):
 	m_board(std::move(board))
 {
+	// Empty
 }
 
 	Position Computer::GenerateTarget() 
@@ -127,8 +128,8 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 		if (catOrientation == ECatOrientation::Horizontal)
 		{
 			validHits = ValidatePossibleHits({
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y-1 },
-				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y+1 }
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y - 1 },
+				{ m_currentTargetKnownPositions.back().x, m_currentTargetKnownPositions.back().y + 1 }
 				});
 		}
 		else
@@ -153,8 +154,8 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 			else
 			{
 				validHits = ValidatePossibleHits({
-					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y-1 },
-					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y+1 }
+					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y - 1 },
+					{ m_currentTargetKnownPositions[index].x, m_currentTargetKnownPositions[index].y + 1 }
 					});
 			}
 			if (!validHits.empty())
@@ -164,8 +165,6 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 		}
 	}
 
-	//We don't know the cat is dead so we might get out of bounds
-	//TODO: Fix this
 	if (validHits.empty())
 	{
 		ResetTarget();
@@ -174,7 +173,6 @@ Position Computer::GenerateTargetBasedOnPreviousAttacks()
 
 	auto chosenPosition = ChooseRandomPosition(validHits);
 	return chosenPosition;
-
 }
 
 Position Computer::HitRandomNeighbour(const Position& position) const
@@ -193,15 +191,7 @@ Position Computer::HitRandomNeighbour(const Position& position) const
 
 ECatOrientation Computer::FindCatOrientation() const
 {
-	if (m_currentTargetKnownPositions[0].x == m_currentTargetKnownPositions[1].x)
-	{
-		return ECatOrientation::Horizontal;
-	}
-	else
-	{
-		return ECatOrientation::Vertical;
-	}
-	
+	return (m_currentTargetKnownPositions[0].x == m_currentTargetKnownPositions[1].x) ? ECatOrientation::Horizontal : ECatOrientation::Vertical;
 }
 
 std::vector<Position> Computer::ValidatePossibleHits(const std::vector<Position>& possibleHits) const
@@ -210,7 +200,7 @@ std::vector<Position> Computer::ValidatePossibleHits(const std::vector<Position>
 
 	for (auto possibleHit : possibleHits)
 	{
-		if (possibleHit.x < 0 || possibleHit.x >= 10 || possibleHit.y < 0 || possibleHit.y >= 10)
+		if (possibleHit.x < 0 || possibleHit.x >= BOARD_SIZE || possibleHit.y < 0 || possibleHit.y >= BOARD_SIZE)
 		{
 			continue;
 		}

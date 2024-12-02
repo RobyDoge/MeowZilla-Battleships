@@ -44,12 +44,12 @@ namespace BoardTest
 		{
 			//verifies if the board got updated with the position of the cat
 			EXPECT_TRUE(board.GetTileTypeAtPosition({ x,y }) == ETileType::Taken);
-			EXPECT_TRUE(board.GetTileTypeAtPosition({ x+1,y }) == ETileType::AreaHit);
-			EXPECT_TRUE(board.GetTileTypeAtPosition({ x-1,y }) == ETileType::AreaHit);
+			EXPECT_TRUE(board.GetTileTypeAtPosition({ x+1,y }) == ETileType::CatArea);
+			EXPECT_TRUE(board.GetTileTypeAtPosition({ x-1,y }) == ETileType::CatArea);
 			if(y==1)
-				EXPECT_TRUE(board.GetTileTypeAtPosition({ x,y-1 }) == ETileType::AreaHit);
+				EXPECT_TRUE(board.GetTileTypeAtPosition({ x,y-1 }) == ETileType::CatArea);
 			if(y==5)
-				EXPECT_TRUE(board.GetTileTypeAtPosition({ x,y+1}) == ETileType::AreaHit);
+				EXPECT_TRUE(board.GetTileTypeAtPosition({ x,y+1}) == ETileType::CatArea);
 
 			//verifies if the cat is inserted inside the array of the cats
 			EXPECT_TRUE(board.FindCatInCatsList({ x,y }) == 0);

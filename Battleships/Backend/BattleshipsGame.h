@@ -15,18 +15,15 @@ public:
 	PlayerPtr GetPlayer() const;
 	ComputerPtr GetComputer() const;
 	EPlayer GetCurrentPlayer() const;
+
 public:
 	void SetBoardObserver(IBoardObserverPtr observer) override;
 	IBoardObserverPtr GetBoardObserver() override;
 	void PlaceCatForPlayer(Position lastPOsition, Position position, ECatSize size, ECatOrientation orientation) override;
-	//EPlayer GetCurrentPlayer() override;
-	
 
 	void RunGame() override;
 	void AttackAtPosition(Position position, EPlayer currentPlayer) override;
 	void ChangeTurn(EPlayer currentPlayer) override;
-
-	//static IGamePtr CreateGame();
 
 private:
 	PlayerPtr m_player;

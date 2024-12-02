@@ -30,13 +30,13 @@ public:
 	bool IsCatDead() const;
 	void RemoveCat(const Position& position);
 	int FindCatInCatsList(const Position& position);
-
+	
 
 private:
 	bool CheckBorders(const std::vector<Position>& positions) const;
 	bool CheckOverlap(const std::vector<Position>& positions) const;
+	bool IsAnotherCatAround(const Position& position);
 	bool ArePositionsValid(const std::vector<Position>& positions);
-	void RemoveCatFromCatList(const Position& position);
 	void AddCat(std::vector<Position> positions);
 	void UpdateBoard(std::vector<Position> positions);
 

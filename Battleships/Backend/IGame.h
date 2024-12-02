@@ -16,8 +16,6 @@ public:
 
 	virtual void PlaceCatForPlayer(Position lastPosition, Position position, ECatSize size, ECatOrientation orientation) = 0;
 
-	//virtual EPlayer GetCurrentPlayer() = 0; 
-
 	virtual void RunGame() = 0;
 	virtual void AttackAtPosition(Position position, EPlayer currentPlayer) = 0;
 	virtual void ChangeTurn(EPlayer currentPlayer) = 0; 

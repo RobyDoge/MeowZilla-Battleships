@@ -7,5 +7,5 @@ enum class ETileType
 	Taken, // 2
 	Hit, // 3
 	Miss, // 4
-	AreaHit // 5
+	CatArea // 5
 };

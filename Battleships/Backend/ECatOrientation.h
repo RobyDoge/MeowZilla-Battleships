@@ -2,7 +2,7 @@
 
 enum class ECatOrientation
 {
-	None =0,
+	None = 0,
 	Vertical = 1,
 	Horizontal = 2
 };
